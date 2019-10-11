@@ -1,0 +1,1191 @@
+fileFormatVersion: 2
+guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: PlayingCards_0
+    21300002: PlayingCards_1
+    21300004: PlayingCards_2
+    21300006: PlayingCards_3
+    21300008: PlayingCards_4
+    21300010: PlayingCards_5
+    21300012: PlayingCards_6
+    21300014: PlayingCards_7
+    21300016: PlayingCards_8
+    21300018: PlayingCards_9
+    21300020: PlayingCards_10
+    21300022: PlayingCards_11
+    21300024: PlayingCards_12
+    21300026: PlayingCards_13
+    21300028: PlayingCards_14
+    21300030: PlayingCards_15
+    21300032: PlayingCards_16
+    21300034: PlayingCards_17
+    21300036: PlayingCards_18
+    21300038: PlayingCards_19
+    21300040: PlayingCards_20
+    21300042: PlayingCards_21
+    21300044: PlayingCards_22
+    21300046: PlayingCards_23
+    21300048: PlayingCards_24
+    21300050: PlayingCards_25
+    21300052: PlayingCards_26
+    21300054: PlayingCards_27
+    21300056: PlayingCards_28
+    21300058: PlayingCards_29
+    21300060: PlayingCards_30
+    21300062: PlayingCards_31
+    21300064: PlayingCards_32
+    21300066: PlayingCards_33
+    21300068: PlayingCards_34
+    21300070: PlayingCards_35
+    21300072: PlayingCards_36
+    21300074: PlayingCards_37
+    21300076: PlayingCards_38
+    21300078: PlayingCards_39
+    21300080: PlayingCards_40
+    21300082: PlayingCards_41
+    21300084: PlayingCards_42
+    21300086: PlayingCards_43
+    21300088: PlayingCards_44
+    21300090: PlayingCards_45
+    21300092: PlayingCards_46
+    21300094: PlayingCards_47
+    21300096: PlayingCards_48
+    21300098: PlayingCards_49
+    21300100: PlayingCards_50
+    21300102: PlayingCards_51
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PlayingCards_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d702af3fc8bf314e9b86465f27499bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_1
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74e3ca314b3efde4bb2b2e1b13b1414f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e21fcb78465ecc94fa7a0cc332db0d40
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_3
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41cf038f94380564dba7c21e4b72ab33
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_4
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58a80ffdad8cebe4d988191d69568184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_5
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59faaade62e4a974aa39216cb734537b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_6
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0109b808a8c76843a704afe06d891a5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_7
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5435369bd7ced93469750c5d073026af
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_8
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6d785f62b69c6b458aae2ace63e11f1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_9
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7a8254222feb7e4bbd4682a7d3e5679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_10
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a482d02251f6acf448cd828bc4d41dda
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_11
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b79c9180531aae54fb118c15d2c7a7e0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_12
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 294
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d47726d7f26e7e342ab9b939642f3407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44f60cd576f19104ab189bfa03a32f60
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_14
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5918cfb7e9842f6478771a05f3342125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_15
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d563abc75bf44b4cbc1c642b2bba238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_16
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c054b8d779b90b41862b44a1d775397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_17
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 389e12ed3dc75a241975bc99203b58b3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_18
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cdf0658fa3d8a84a80090b5a2a21503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_19
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89ef6b2e7d94e104e8a577c4471224dc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_20
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9f84805148d3f444862fbe2bc9d05aa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_21
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e39c42bdd7fb1f844b3920175035583d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_22
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e7f067e8f3c5c241801de4af7dce5be
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_23
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21cd9f3db8e44f54cae5d8260471db0e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_24
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffed880ab18509c459be2dc3c38e9c4b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_25
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 196
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ddc8baea5255084090a4aca3dd263be
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57309a9eecab3d44ea668d9d91790f5e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_27
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af8b19f13b158384e899667f70396736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_28
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbe2566ceeb677f4ea6eeeadf5ffcc1b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_29
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 351294d761171294b9f81a57c3d5dfce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_30
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7e870fac743f914785881cdee8687bf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_31
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b92cec372223ae645ab0f6e43eb530f4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_32
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 579781f05bc18944db2a29d898537361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_33
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ad039ea43d278546a28291a4b1f68fc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_34
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a017677520b12f4ebbbf3572877ba96
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_35
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1747b444882030c479068f93bc3ce849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_36
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ea9d93cf8267f541a6ea227a1dc779b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_37
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1b0ab245be60f945a8724c39415346d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_38
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 98
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34cb48d206ed60b4485b8144dfbcf95b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da305642c491e3241bd81a8dcba7658c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_40
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84882fe901896aa428ce4eec1444fb14
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_41
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74639d7fe3663f444a52426a3f03cc32
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_42
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6aec931cbb3d6cf47a5b1dc3a0ebcb39
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_43
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee32367c9a88b0249b3382f6232b5f0c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_44
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10ef9aa9588c0344e8f6a3d87ccb4ad2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_45
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35e02ae71b972824c81140a91dc6a50f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_46
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f72a4fb45f9ce854ca64648846e26893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_47
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b66520f4233408f42919eb130219ae6f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_48
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acc2e6a40d6e42647a4480ef6a0f3062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_49
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb7c93ced5fc8034ca132c9792216f0a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_50
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a9f46b607f4b0478cf37b260d8abad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayingCards_51
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 0
+        width: 73.07692
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d751bef468a13f49aec7b9002d7ec7a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: e3dbb2e7552af4d438cc72aa6d187557
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
