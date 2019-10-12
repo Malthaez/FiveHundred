@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 106140328}
   - component: {fileID: 106140327}
   - component: {fileID: 106140326}
+  - component: {fileID: 106140319}
   - component: {fileID: 106140323}
   - component: {fileID: 106140318}
   - component: {fileID: 106140317}
@@ -164,6 +165,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbebe6c55afa4d4aaa3eaed24c5e4c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &106140319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106140316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e178b79d2c590409e67799f018f5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardPrefab: {fileID: 1991200763, guid: 2f5151bec6431fa44af430b31c0d762a, type: 3}
+  _playingCardArtImages:
+  - {fileID: 21300000, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300002, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300004, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300006, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300008, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300010, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300012, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300014, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300016, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300018, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300020, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300022, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300024, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300026, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300028, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300030, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300032, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300034, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300036, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300038, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300040, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300042, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300044, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300046, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300048, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300050, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300052, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300054, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300056, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300058, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300060, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300062, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300064, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300066, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300068, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300070, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300072, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300074, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300076, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300078, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300080, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300082, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300084, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300086, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300088, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300090, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300092, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300094, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300096, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300098, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300100, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  - {fileID: 21300102, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
 --- !u!4 &106140320
 Transform:
   m_ObjectHideFlags: 0
@@ -230,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90280871784012d42a747181554fdc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardPrefab: {fileID: 1991200763, guid: 2f5151bec6431fa44af430b31c0d762a, type: 3}
+  _cardPrefab: {fileID: 0}
   _cardArtImages:
   - {fileID: 21300000, guid: c5212c916a8d2744e8bfd7354c43b378, type: 3}
   - {fileID: 21300000, guid: 3f3e9f1fae6a98e44acbaf00471295e0, type: 3}
