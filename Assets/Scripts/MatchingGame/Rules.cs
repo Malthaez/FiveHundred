@@ -9,7 +9,7 @@ namespace MatchingGame
         //Returns false if any card's value in a collection are "NotSet"
         public static bool CardValuesAreSet(IEnumerable<Card> cards)
         {
-            foreach (Card card in cards) { if (card.CardValue == CardValuesEnum.NotSet) { return false; } }
+            foreach (Card card in cards) { if (card.CardValue == CardSuitsEnum.NotSet) { return false; } }
 
             return true;
         }
@@ -17,7 +17,7 @@ namespace MatchingGame
         //Returns false if any card's value in a collection isn't the same
         public static bool CardValuesMatch(IEnumerable<Card> cards)
         {
-            CardValuesEnum x = CardValuesEnum.NotSet;
+            CardSuitsEnum x = CardSuitsEnum.NotSet;
 
             foreach (Card card in cards) { x = card.CardValue; }
             foreach (Card card in cards) { if (card.CardValue != x) { return false; } }

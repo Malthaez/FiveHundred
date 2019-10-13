@@ -8,14 +8,11 @@ namespace MatchingGame.Api.ServiceDefinitions
     {
         public ICardManager _cardManager;
 
-        public CardService(ICardManager cardManager)
-        {
-            _cardManager = cardManager;
-        }
+        public CardService(ICardManager cardManager) => _cardManager = cardManager;
 
         //public PostSampleResponse Post(PostSampleRequest request) => new PostSampleResponse { Id = _sampleManager.Post(request.ToDto()) };
 
-        public ReadCardResponse ReadCard(ReadCardRequest request) => new ReadCardResponse { Card = _cardManager.Get(request.ToDto()).ToServiceModel() };
+        public ReadCardResponse ReadCaptionCard(ReadCardRequest request) => new ReadCardResponse { CaptionCard = _cardManager.Get(request.ToDto()).ToServiceModel() };
 
         //public PutSampleResponse Put(PutSampleRequest request) => new PutSampleResponse { ResponseStatus = _sampleManager.Put(request.Id, request.ToDto()) };
 

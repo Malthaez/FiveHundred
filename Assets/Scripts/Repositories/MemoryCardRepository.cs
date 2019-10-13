@@ -9,7 +9,7 @@ namespace MatchingGame.Repositories
 {
     public class MemoryCardRepository : MonoBehaviour
     {
-        public MemoryCard _cardPrefab; // Must be set in editor.
+        public CaptionCard _cardPrefab; // Must be set in editor.
         public List<Sprite> _cardArtImages; // Must be set in editor.
         public CardService _cardService;
         
@@ -18,12 +18,12 @@ namespace MatchingGame.Repositories
             _cardService = cardService;
         }
 
-        public MemoryCard CreateCardPrefab(CardValuesEnum cardValue)
+        public CaptionCard CreateMemoryCardPrefab(CardSuitsEnum cardValue)
         {
             var card = Instantiate(_cardPrefab);
             card.CardArt = _cardArtImages[(int) cardValue];
 
-            card.CopyFromModel(_cardService.ReadCard(cardValue.ToRequest()).Card);
+            card.CopyFromModel(_cardService.ReadCaptionCard(cardValue.ToRequest()).CaptionCard);
 
             return card;
         }

@@ -3,14 +3,19 @@
     public enum CardValuesEnum
     {
         NotSet,
-        Club,
-        Spade,
-        Diamond,
-        Heart,
-        Square,
-        Circle,
-        Triangle,
-        Star,
+        Ace,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Ten,
+        Jack,
+        Queen,
+        King,
         MAX
     }
 }

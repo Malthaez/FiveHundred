@@ -8,10 +8,10 @@ namespace MatchingGame.Behaviors
     [RequireComponent(typeof(Collider))]
     public class Card : MonoBehaviour
     {
-        public CardValuesEnum _cardValue;
+        public CardSuitsEnum _cardValue;
         public Image _cardArt;
 
-        public CardValuesEnum CardValue { get => _cardValue; set => _cardValue = value; }
+        public CardSuitsEnum CardValue { get => _cardValue; set => _cardValue = value; }
         public Sprite CardArt { get => _cardArt.sprite; set => _cardArt.sprite = value; }
 
         //========

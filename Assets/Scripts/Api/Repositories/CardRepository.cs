@@ -6,22 +6,19 @@ using System.Collections.Generic;
 
 namespace MatchingGame.Api.Repositories
 {
-    public class CardRepository : ICardRepository 
+    public class CardRepository : ICardRepository
     {
         private readonly ISampleServiceClient _sampleServiceClient;
 
-        public CardRepository(ISampleServiceClient sampleServiceClient)
-        {
-            _sampleServiceClient = sampleServiceClient;
-        }
+        public CardRepository(ISampleServiceClient sampleServiceClient) => _sampleServiceClient = sampleServiceClient;
 
-        public Card Get(CardValue? cardValue) => ReadCard(_sampleServiceClient.Get((int) cardValue));
+        public Card Get(CardSuit? cardSuit) => ReadCaptionCard(_sampleServiceClient.Get((int)cardSuit));
 
-        public Card ReadCard(Dictionary<string, object> reader)
+        public Card ReadCaptionCard(Dictionary<string, object> reader)
             => new Card
             {
-                CardValue = (CardValue?) reader["@CardValue"],
-                CardText  = (string)     reader["@CardText"]
+                CardValue = (CardSuit?)reader["@CardValue"],
+                CardText = (string)reader["@CardText"]
             };
     }
 }

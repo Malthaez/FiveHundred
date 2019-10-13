@@ -42,9 +42,27 @@ namespace MatchingGame.Managers
             return isRegistered;
         }
 
-        public MemoryCard CreateCard(CardValuesEnum cardValue) => _cardRepository.CreateCardPrefab(cardValue);
+        public CaptionCard CreateCard(CardSuitsEnum cardValue) => _cardRepository.CreateMemoryCardPrefab(cardValue);
 
-        public Card CreatePlayingCard(CardValuesEnum cardValue) => _playingCardRepository.CreatePlayingCardPrefab(cardValue);
+        public Card CreatePlayingCard(CardSuitsEnum cardSuit, CardValuesEnum cardValue) => _playingCardRepository.CreatePlayingCardPrefab(cardSuit, cardValue);
+
+        public List<Card> GetPlayingCardDeck()
+        {
+            var deck = new List<Card>();
+
+            int suitCount = 4;
+            int cardsPerSuit = 13;
+
+            for (int i = 0; i < suitCount; i++)
+            {
+                for(int j = 0; j < cardsPerSuit; i++)
+                {
+                    deck.Add(CreatePlayingCard((CardSuitsEnum)i, (CardValuesEnum)j));
+                }
+            }
+
+            return deck;
+        }
 
         public List<Card> GetCardPairs(int cardPairsCount)
         {
@@ -52,13 +70,13 @@ namespace MatchingGame.Managers
 
             for (int i = 0; i < cardPairsCount; i++)
             {
-                var cardValue = (CardValuesEnum)(i + 1 - (((int)CardValuesEnum.MAX - 1) * (i / ((int)CardValuesEnum.MAX - 1))));
+                var cardValue = (CardSuitsEnum)(i + 1 - (((int)CardSuitsEnum.MAX - 1) * (i / ((int)CardSuitsEnum.MAX - 1))));
                 //var cardValue = (CardValuesEnum)Random.Range(1, (int)CardValuesEnum.MAX);
 
                 //cards.Add(CreateCard(cardValue));
                 //cards.Add(CreateCard(cardValue));
-                cards.Add(CreatePlayingCard(cardValue));
-                cards.Add(CreatePlayingCard(cardValue));
+                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
+                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
             }
 
             return cards;

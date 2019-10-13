@@ -8,6 +8,6 @@ namespace MatchingGame.Api.ServiceModels.Messages
         public bool ResponseStatus { get; set; }
 
         //[ApiMember(Description = "")]
-        public MemoryCardModel Card { get; set; }
+        public CaptionCardModel CaptionCard { get; set; }
     }
 }

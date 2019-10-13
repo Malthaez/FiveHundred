@@ -5,6 +5,6 @@ namespace MatchingGame.Api.Interfaces.Repositories
 {
     public interface ICardRepository
     {
-        Card Get(CardValue? cardValue);
+        Card Get(CardSuit? cardSuit);
     }
 }

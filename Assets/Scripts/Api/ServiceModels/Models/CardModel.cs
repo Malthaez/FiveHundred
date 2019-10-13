@@ -4,7 +4,7 @@ namespace MatchingGame.Api.ServiceModels.Models
 {
     public class CardModel
     {
-        //[ApiMember(Description = "Card's value.")]
-        public CardValueModel? CardValue { get; set; }
+        //[ApiMember(Description = "Card's suit.")]
+        public CardSuitModel? CardSuit { get; set; }
     }
 }

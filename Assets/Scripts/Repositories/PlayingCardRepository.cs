@@ -1,4 +1,6 @@
 ﻿using MatchingGame.Api.ServiceDefinitions;
+using MatchingGame.Api.ServiceModels.Enums;
+using MatchingGame.Api.ServiceModels.Messages;
 using MatchingGame.Behaviors;
 using MatchingGame.Enums;
 using MatchingGame.Repositories.Mappers;
@@ -12,18 +14,14 @@ namespace MatchingGame.Repositories
         public Card _cardPrefab; // Must be set in editor.
         public List<Sprite> _playingCardArtImages; // Must be set in editor.
         public CardService _cardService;
-        
-        public void Initialize(CardService cardService)
-        {
-            _cardService = cardService;
-        }
 
-        public Card CreatePlayingCardPrefab(CardValuesEnum cardValue)
+        public void Initialize(CardService cardService) => _cardService = cardService;
+
+        public Card CreatePlayingCardPrefab(CardSuitsEnum cardSuit, CardValuesEnum cardValue)
         {
             var card = Instantiate(_cardPrefab);
-            card.CardArt = _playingCardArtImages[(int) cardValue];
 
-            card.CopyFromModel(_cardService.ReadCard(cardValue.ToRequest()).Card);
+            card.CardArt = _playingCardArtImages[(int)cardSuit * (int)cardValue];
 
             return card;
         }

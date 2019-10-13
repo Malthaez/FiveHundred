@@ -10,14 +10,15 @@ namespace MatchingGame.Api.DTOs.Mappers
         public static Card ToDto(this ReadCardRequest request)
             => new Card
             {
-                CardValue = (CardValue) request.CardValue
+                CardValue = (CardSuit) request.CardSuit
             };
 
-        public static MemoryCardModel ToServiceModel(this Card card)
-            => new MemoryCardModel
+        public static CaptionCardModel ToServiceModel(this Card card)
+            => new CaptionCardModel
             {
-                CardValue = (CardValueModel) card.CardValue,
+                CardSuit = (CardSuitModel) card.CardValue,
                 CardText = card.CardText
             };
     }
 }
+

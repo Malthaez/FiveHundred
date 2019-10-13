@@ -66,5 +66,7 @@ namespace MatchingGame.Api.Clients.Databases
                     }
                 }
             };
+
+        public List<Sprite> PlayingCardArtImages; // Must be set in editor.
     }
 }
