@@ -1,4 +1,5 @@
-﻿using MatchingGame.Behaviors;
+﻿using Assets.Scripts.Behaviors.Mappers;
+using MatchingGame.Behaviors;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,13 +7,18 @@ namespace Assets.Scripts.Behaviors.Layout
 {
     public class TestLayout : Layout
     {
-        public TestLayout(List<Transform> layoutElements) : base(layoutElements) { }
+        private List<Player> _players;
+
+        public TestLayout(List<Player> players) : base(players.ToTransforms())
+        {
+            _players = players;
+        }
 
         public override void Refresh()
         {
-            foreach (var element in _layoutElements)
+            foreach (var player in _players)
             {
-                element.transform.position = GetPosition(SeatPositionFactory.GetSeatCoordinates(element.GetComponent<Player>().Seat));
+                player.transform.position = GetPosition(SeatPositionFactory.GetSeatCoordinates(player.Seat));
             }
         }
 

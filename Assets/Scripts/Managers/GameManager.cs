@@ -29,8 +29,8 @@ namespace MatchingGame.Managers
             _cardManager.Initialize(_scoreManager);
             _layoutManager.Initialize();
 
-            StartMemoryGame(_gameDataSource.CardPairsCount);
-            //StartFiveHundredGame(_gameDataSource.Players);
+            //StartMemoryGame(_gameDataSource.CardPairsCount);
+            StartFiveHundredGame(_gameDataSource.Players);
         }
 
         private void StartMemoryGame(int cardPairsCount)
@@ -51,7 +51,7 @@ namespace MatchingGame.Managers
             _cardManager.Shuffle(cards);
             _cardManager.Deal(players, cards);
 
-            _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
+            _layoutManager.SetLayout(new TestLayout(players));
         }
     }
 }

@@ -55,7 +55,7 @@ namespace MatchingGame.Managers
 
             for (int i = 0; i < suitCount; i++)
             {
-                for(int j = 0; j < cardsPerSuit; i++)
+                for(int j = 0; j < cardsPerSuit; j++)
                 {
                     deck.Add(CreatePlayingCard((CardSuitsEnum)i, (CardValuesEnum)j));
                 }
