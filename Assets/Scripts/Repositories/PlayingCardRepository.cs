@@ -1,9 +1,6 @@
 ﻿using MatchingGame.Api.ServiceDefinitions;
-using MatchingGame.Api.ServiceModels.Enums;
-using MatchingGame.Api.ServiceModels.Messages;
 using MatchingGame.Behaviors;
 using MatchingGame.Enums;
-using MatchingGame.Repositories.Mappers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +18,9 @@ namespace MatchingGame.Repositories
         {
             var card = Instantiate(_cardPrefab);
 
-            card.CardArt = _playingCardArtImages[(int)cardSuit * (int)cardValue];
+            card.Suit = cardSuit;
+            card.Value = (int)cardValue;
+            card.Art = _playingCardArtImages[(int)cardSuit * (int)cardValue];
 
             return card;
         }

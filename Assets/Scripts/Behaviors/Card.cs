@@ -8,16 +8,18 @@ namespace MatchingGame.Behaviors
     [RequireComponent(typeof(Collider))]
     public class Card : MonoBehaviour
     {
-        public CardSuitsEnum _cardValue;
-        public Image _cardArt;
+        [SerializeField] private CardSuitsEnum _cardSuit;
+        [SerializeField] private int _value;
+        [SerializeField] private Image _cardArt;
 
-        public CardSuitsEnum CardValue { get => _cardValue; set => _cardValue = value; }
-        public Sprite CardArt { get => _cardArt.sprite; set => _cardArt.sprite = value; }
+        public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
+        public int Value { get => _value; set => _value = value; }
+        public Sprite Art { get => _cardArt.sprite; set => _cardArt.sprite = value; }
 
         //========
 
         protected bool _flipping = false;
-        protected bool _flipped  = false;
+        protected bool _flipped = false;
 
         public bool Flipping => _flipping;
 
@@ -43,7 +45,7 @@ namespace MatchingGame.Behaviors
             OnFlipStart?.Invoke(this);
 
             _flipping = true;
-            float t   = 0f;
+            float t = 0f;
 
             while (true)
             {
@@ -66,7 +68,7 @@ namespace MatchingGame.Behaviors
 
             yield return new WaitForSeconds(pause);
 
-            _flipped  = !_flipped;
+            _flipped = !_flipped;
             _flipping = false;
 
             OnFlipEnd?.Invoke(this);

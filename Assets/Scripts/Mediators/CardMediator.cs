@@ -104,9 +104,9 @@ namespace MatchingGame.Mediators
 
         public void MatchValidation(IEnumerable<Card> cards)
         {
-            if (!Rules.ValidateCardCount(2, cards) || !Rules.CardValuesAreSet(cards)) { return; }
+            if (!Rules.ValidateCardCount(2, cards) || !Rules.CardSuitsAreSet(cards)) { return; }
 
-            if(Rules.CardValuesMatch(cards))
+            if(Rules.CardSuitsMatch(cards) && Rules.CardValuesMatch(cards))
             { MatchSuccess(cards); }
             else
             { MatchFailure(cards); }

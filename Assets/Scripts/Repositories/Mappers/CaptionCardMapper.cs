@@ -8,7 +8,7 @@ namespace MatchingGame.Repositories.Mappers
     {
         public static void CopyFromModel(this CaptionCard card, CaptionCardModel cardModel)
         {
-            card.CardValue = (CardSuitsEnum) cardModel.CardSuit;
+            card.Suit = (CardSuitsEnum) cardModel.CardSuit;
             card.CardText  = cardModel.CardText;
 
             card.name = $"Card ({cardModel.CardSuit.ToString()})";

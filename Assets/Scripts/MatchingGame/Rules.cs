@@ -6,10 +6,10 @@ namespace MatchingGame
 {
     public static class Rules
     {
-        //Returns false if any card's value in a collection are "NotSet"
-        public static bool CardValuesAreSet(IEnumerable<Card> cards)
+        //Returns false if any card's suit in a collection are "NotSet"
+        public static bool CardSuitsAreSet(IEnumerable<Card> cards)
         {
-            foreach (Card card in cards) { if (card.CardValue == CardSuitsEnum.NotSet) { return false; } }
+            foreach (Card card in cards) { if (card.Suit == CardSuitsEnum.NotSet) { return false; } }
 
             return true;
         }
@@ -17,10 +17,19 @@ namespace MatchingGame
         //Returns false if any card's value in a collection isn't the same
         public static bool CardValuesMatch(IEnumerable<Card> cards)
         {
-            CardSuitsEnum x = CardSuitsEnum.NotSet;
+            int x = ((List<Card>)cards)[0].Value;
 
-            foreach (Card card in cards) { x = card.CardValue; }
-            foreach (Card card in cards) { if (card.CardValue != x) { return false; } }
+            foreach (Card card in cards) { if (card.Value != x) { return false; } }
+
+            return true;
+        }
+
+        //Returns false if any card's suit in a collection isn't the same
+        public static bool CardSuitsMatch(IEnumerable<Card> cards)
+        {
+            CardSuitsEnum x = ((List<Card>)cards)[0].Suit;
+
+            foreach (Card card in cards) { if (card.Suit != x) { return false; } }
 
             return true;
         }

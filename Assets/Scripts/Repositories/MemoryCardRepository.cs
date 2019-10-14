@@ -21,7 +21,7 @@ namespace MatchingGame.Repositories
         public CaptionCard CreateMemoryCardPrefab(CardSuitsEnum cardValue)
         {
             var card = Instantiate(_cardPrefab);
-            card.CardArt = _cardArtImages[(int) cardValue];
+            card.Art = _cardArtImages[(int) cardValue];
 
             card.CopyFromModel(_cardService.ReadCaptionCard(cardValue.ToRequest()).CaptionCard);
 

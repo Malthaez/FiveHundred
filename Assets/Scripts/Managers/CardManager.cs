@@ -95,5 +95,17 @@ namespace MatchingGame.Managers
                 cards[n] = value;
             }
         }
+
+        public void Deal(List<Player> players, List<Card> cards)
+        {
+            int n = 0;
+
+            foreach(var card in cards)
+            {
+                players[n].AddToHand(card);
+
+                n = n == players.Count - 1 ? 0 : n + 1;
+            }
+        }
     }
 }
