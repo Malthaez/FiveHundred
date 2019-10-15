@@ -50,14 +50,36 @@ namespace MatchingGame.Managers
         {
             var deck = new List<Card>();
 
-            int suitCount = 4;
-            int cardsPerSuit = 13;
-
-            for (int i = 0; i < suitCount; i++)
+            HashSet<CardSuitsEnum> suits = new HashSet<CardSuitsEnum>
             {
-                for(int j = 0; j < cardsPerSuit; j++)
+                CardSuitsEnum.Club,
+                CardSuitsEnum.Spade,
+                CardSuitsEnum.Diamond,
+                CardSuitsEnum.Heart,
+            };
+
+            HashSet<CardValuesEnum> values = new HashSet<CardValuesEnum>
+            {
+                CardValuesEnum.Ace,
+                CardValuesEnum.Two,
+                CardValuesEnum.Three,
+                CardValuesEnum.Four,
+                CardValuesEnum.Five,
+                CardValuesEnum.Six,
+                CardValuesEnum.Seven,
+                CardValuesEnum.Eight,
+                CardValuesEnum.Nine,
+                CardValuesEnum.Ten,
+                CardValuesEnum.Jack,
+                CardValuesEnum.Queen,
+                CardValuesEnum.King
+            };
+
+            foreach (var suit in suits)
+            {
+                foreach(var value in values)
                 {
-                    deck.Add(CreatePlayingCard((CardSuitsEnum)i, (CardValuesEnum)j));
+                    deck.Add(CreatePlayingCard(suit, value));
                 }
             }
 
@@ -73,10 +95,10 @@ namespace MatchingGame.Managers
                 var cardValue = (CardSuitsEnum)(i + 1 - (((int)CardSuitsEnum.MAX - 1) * (i / ((int)CardSuitsEnum.MAX - 1))));
                 //var cardValue = (CardValuesEnum)Random.Range(1, (int)CardValuesEnum.MAX);
 
-                //cards.Add(CreateCard(cardValue));
-                //cards.Add(CreateCard(cardValue));
-                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
-                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
+                cards.Add(CreateCard(cardValue));
+                cards.Add(CreateCard(cardValue));
+                //cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
+                //cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
             }
 
             return cards;
@@ -100,7 +122,7 @@ namespace MatchingGame.Managers
         {
             int n = 0;
 
-            foreach(var card in cards)
+            foreach (var card in cards)
             {
                 players[n].AddToHand(card);
 

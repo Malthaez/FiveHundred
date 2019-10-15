@@ -20,7 +20,16 @@ namespace MatchingGame.Repositories
 
             card.Suit = cardSuit;
             card.Value = (int)cardValue;
-            card.Art = _playingCardArtImages[(int)cardSuit * (int)cardValue];
+
+            if(card.Suit != CardSuitsEnum.NotSet && card.Value > 0)
+            {
+                int x = ((int)cardSuit);
+                int y = ((int)cardValue);
+                int z = x * y - 1;
+                Debug.Log($"{x}, {y}, {z}");
+
+                card.Art = _playingCardArtImages[z];
+            }
 
             return card;
         }

@@ -9,16 +9,13 @@ namespace Assets.Scripts.Behaviors.Layout
     {
         private List<Player> _players;
 
-        public TestLayout(List<Player> players) : base(players.ToTransforms())
-        {
-            _players = players;
-        }
+        public TestLayout(List<Transform> layoutElements) : base(layoutElements) { }
 
         public override void Refresh()
         {
-            foreach (var player in _players)
+            foreach (var element in _layoutElements)
             {
-                player.transform.position = GetPosition(SeatPositionFactory.GetSeatCoordinates(player.Seat));
+                element.transform.position = GetPosition(SeatPositionFactory.GetSeatCoordinates(element.GetComponent<Player>().Seat));
             }
         }
 
