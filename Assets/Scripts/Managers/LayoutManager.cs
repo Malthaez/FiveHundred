@@ -1,15 +1,15 @@
-﻿using Assets.Scripts.Behaviors.Layout;
+﻿using MatchingGame.Behaviors.Layout;
 using UnityEngine;
 
 namespace MatchingGame.Managers
 {
     public class LayoutManager : MonoBehaviour
     {
-        private Layout _layout;
+        private CardLayout _layout;
 
         public void Initialize() { }
 
-        public void SetLayout(Layout layout)
+        public void SetLayout(CardLayout layout)
         {
             _layout = layout;
 

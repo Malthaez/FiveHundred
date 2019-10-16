@@ -1,8 +1,7 @@
-﻿using MatchingGame.Behaviors;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Behaviors.Mappers
+namespace MatchingGame.Behaviors.Mappers
 {
     public static class CardMapper
     {

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Behaviors.Layout
+namespace MatchingGame.Behaviors.Layout
 {
-    public abstract class Layout
+    public abstract class CardLayout
     {
         [SerializeField] protected List<Transform> _layoutElements;
 
-        public Layout(List<Transform> layoutElements) => _layoutElements = layoutElements;
+        public CardLayout(List<Transform> layoutElements) => _layoutElements = layoutElements;
 
         public abstract void Refresh();
     }

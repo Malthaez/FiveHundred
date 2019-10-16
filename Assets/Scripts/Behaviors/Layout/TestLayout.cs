@@ -1,25 +1,27 @@
-﻿using Assets.Scripts.Behaviors.Mappers;
-using MatchingGame.Behaviors;
+﻿using MatchingGame.Behaviors.Layout.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Behaviors.Layout
+namespace MatchingGame.Behaviors.Layout
 {
-    public class TestLayout : Layout
+    public class TestLayout : CardLayout
     {
         private List<Player> _players;
+        private Deck _deck;
 
         public TestLayout(List<Transform> layoutElements) : base(layoutElements) { }
 
         public override void Refresh()
         {
+            int n = 0;
             foreach (var element in _layoutElements)
             {
-                element.transform.position = GetPosition(SeatPositionFactory.GetSeatCoordinates(element.GetComponent<Player>().Seat));
+                element.transform.position = GetPosition(SeatPositionFactory.GetSeatCoordinates(element.GetComponent<Player>().Seat), new[] { 0.25f * n, 0f * n });
+                n++;
             }
         }
 
-        private Vector3 GetPosition(int[] coordinates)
+        private Vector3 GetPosition(int[] coordinates, float[] offset)
             => new Vector3
             {
                 x = 2 * coordinates[0],

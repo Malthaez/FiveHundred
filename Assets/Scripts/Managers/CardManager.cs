@@ -95,10 +95,10 @@ namespace MatchingGame.Managers
                 var cardValue = (CardSuitsEnum)(i + 1 - (((int)CardSuitsEnum.MAX - 1) * (i / ((int)CardSuitsEnum.MAX - 1))));
                 //var cardValue = (CardValuesEnum)Random.Range(1, (int)CardValuesEnum.MAX);
 
-                cards.Add(CreateCard(cardValue));
-                cards.Add(CreateCard(cardValue));
-                //cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
-                //cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)i));
+                //cards.Add(CreateCard(cardValue));
+                //cards.Add(CreateCard(cardValue));
+                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)(i + 1)));
+                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)(i + 1)));
             }
 
             return cards;

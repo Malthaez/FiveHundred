@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Behaviors.Layout
+namespace MatchingGame.Behaviors.Layout
 {
-    public class MemoryGameLayout : Layout
+    public class CardGridLayout : CardLayout
     {
-        private Vector2 _padding = new Vector2 { x = 0.8f, y = 1.1f };
-        private int _colCount = 6;
+        private Vector2 _padding;
+        private int _colCount;
         private int _rowCount;
 
-        public MemoryGameLayout(List<Transform> layoutElements) : base(layoutElements) { }
+        public CardGridLayout(List<Transform> layoutElements, float[] padding, int columnCount) : base(layoutElements)
+        {
+            _padding = new Vector2 { x = padding[0], y = padding[1] };
+            _colCount = columnCount;
+        }
 
         public override void Refresh()
         {

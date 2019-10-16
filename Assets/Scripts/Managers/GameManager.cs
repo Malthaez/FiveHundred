@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Behaviors.Layout;
-using Assets.Scripts.Behaviors.Mappers;
-using MatchingGame.Behaviors;
+﻿using MatchingGame.Behaviors;
+using MatchingGame.Behaviors.Layout;
+using MatchingGame.Behaviors.Mappers;
 using MatchingGame.DataSource;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,8 +29,8 @@ namespace MatchingGame.Managers
             _cardManager.Initialize(_scoreManager);
             _layoutManager.Initialize();
 
-            StartMemoryGame(_gameDataSource.CardPairsCount);
-            //StartFiveHundredGame(_gameDataSource.Players);
+            //StartMemoryGame(_gameDataSource.CardPairsCount);
+            StartFiveHundredGame(_gameDataSource.Players);
         }
 
         private void StartMemoryGame(int cardPairsCount)
@@ -40,7 +40,7 @@ namespace MatchingGame.Managers
             _cardManager.Register(cards);
             _cardManager.Shuffle(cards);
 
-            _layoutManager.SetLayout(new MemoryGameLayout(cards.ToTransforms()));
+            _layoutManager.SetLayout(new CardGridLayout(cards.ToTransforms(), new[] { 0.8f, 1.1f }, 6));
         }
 
         private void StartFiveHundredGame(List<Player> players)
@@ -51,6 +51,7 @@ namespace MatchingGame.Managers
             _cardManager.Shuffle(cards);
             _cardManager.Deal(players, cards);
 
+            //_layoutManager.SetLayout(new CardGridLayout(cards.ToTransforms(), new[] { 0.8f, 1.1f }, 13));
             _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
         }
     }

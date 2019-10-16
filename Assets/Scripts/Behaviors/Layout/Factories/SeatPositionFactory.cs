@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Enums;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Behaviors.Layout
+namespace MatchingGame.Behaviors.Layout.Factories
 {
     public class SeatPositionFactory
     {
