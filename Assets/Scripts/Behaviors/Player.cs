@@ -16,6 +16,8 @@ namespace MatchingGame.Behaviors
             card.transform.position = transform.position;
             card.transform.SetParent(transform);
 
+            card.transform.position = transform.position + new Vector3 { x = 0.25f, y = 0f, z = 0.15f } * _hand.Count;
+
             _hand.Add(card);
         }
     }

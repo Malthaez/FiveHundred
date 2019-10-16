@@ -24,8 +24,8 @@ namespace MatchingGame.Behaviors.Layout
         private Vector3 GetPosition(int[] coordinates, float[] offset)
             => new Vector3
             {
-                x = 2 * coordinates[0],
-                y = 2 * coordinates[1]
+                x = 4.5f * coordinates[0],
+                y = 4.5f * coordinates[1]
             };
     }
 }
