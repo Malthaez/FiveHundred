@@ -45,11 +45,12 @@ namespace MatchingGame.Managers
 
         private void StartFiveHundredGame(List<Player> players)
         {
-            var cards = _cardManager.GetPlayingCardDeck();
+            var deck = _cardManager.GetPlayingCardDeck();
 
-            _cardManager.Register(cards);
-            _cardManager.Shuffle(cards);
-            _cardManager.Deal(players, cards);
+            _cardManager.Register(deck.Cards);
+            deck.Shuffle();
+            var player = _cardManager.DealUntilFirstJack(players, deck);
+            _cardManager.Deal(player, players, deck);
 
             //_layoutManager.SetLayout(new CardGridLayout(cards.ToTransforms(), new[] { 0.8f, 1.1f }, 13));
             _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));

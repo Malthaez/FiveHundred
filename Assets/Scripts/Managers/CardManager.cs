@@ -11,21 +11,25 @@ namespace MatchingGame.Managers
     [RequireComponent(typeof(CardMediator))]
     [RequireComponent(typeof(MemoryCardRepository))]
     [RequireComponent(typeof(PlayingCardRepository))]
+    [RequireComponent(typeof(DeckRepository))]
     public class CardManager : MonoBehaviour
     {
         private CardMediator _cardMediator;
         private MemoryCardRepository _cardRepository;
         private PlayingCardRepository _playingCardRepository;
+        private DeckRepository _deckRepository;
 
         public void Initialize(ScoreManager scoreManager)
         {
             _cardMediator = GetComponent<CardMediator>();
             _cardRepository = GetComponent<MemoryCardRepository>();
             _playingCardRepository = GetComponent<PlayingCardRepository>();
+            _deckRepository = GetComponent<DeckRepository>();
 
             _cardMediator.Initialize(scoreManager);
             _cardRepository.Initialize(CardServiceHost.CreateCardService());
             _playingCardRepository.Initialize(CardServiceHost.CreateCardService());
+            _deckRepository.Initialize();
         }
 
         public bool Register(Card card) => _cardMediator.Register(card);
@@ -46,9 +50,11 @@ namespace MatchingGame.Managers
 
         public Card CreatePlayingCard(CardSuitsEnum cardSuit, CardValuesEnum cardValue) => _playingCardRepository.CreatePlayingCardPrefab(cardSuit, cardValue);
 
-        public List<Card> GetPlayingCardDeck()
+        public Deck GetPlayingCardDeck()
         {
-            var deck = new List<Card>();
+            var deck = _deckRepository.CreateDeckPrefab();
+
+            var cards= new List<Card>();
 
             HashSet<CardSuitsEnum> suits = new HashSet<CardSuitsEnum>
             {
@@ -77,9 +83,9 @@ namespace MatchingGame.Managers
 
             foreach (var suit in suits)
             {
-                foreach(var value in values)
+                foreach (var value in values)
                 {
-                    deck.Add(CreatePlayingCard(suit, value));
+                    deck.AddCard(CreatePlayingCard(suit, value));
                 }
             }
 
@@ -118,16 +124,37 @@ namespace MatchingGame.Managers
             }
         }
 
-        public void Deal(List<Player> players, List<Card> cards)
+        public void Deal(Player dealer, List<Player> players, Deck deck)
+        {
+            int n = players.IndexOf(dealer) + 1;
+            Debug.Log($"Player {n} is dealing");
+
+            foreach (var card in deck.Cards)
+            {
+                n = n >= players.Count - 1 ? 0 : n + 1;
+
+                players[n].AddToHand(card);
+            }
+        }
+
+        // Returns player who was dealt first Jack
+        public Player DealUntilFirstJack(List<Player> players, Deck deck)
         {
             int n = 0;
 
-            foreach (var card in cards)
+            foreach (var card in deck.Cards)
             {
-                players[n].AddToHand(card);
-
-                n = n == players.Count - 1 ? 0 : n + 1;
+                if ((CardValuesEnum)card.Value == CardValuesEnum.Jack)
+                {
+                    return players[n];
+                }
+                else
+                {
+                    n = n == players.Count - 1 ? 0 : n + 1;
+                }
             }
+
+            return null;
         }
     }
 }

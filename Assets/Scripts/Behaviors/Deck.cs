@@ -7,7 +7,13 @@ namespace MatchingGame.Behaviors
     {
         [SerializeField] private List<Card> _cards;
 
-        public List<Card> Cards { get => _cards; set => _cards = value; }
+        public List<Card> Cards { get => _cards; private set => _cards = value; }
+
+        public void AddCard(Card card)
+        {
+            Cards.Add(card);
+            card.transform.parent = transform;
+        }
 
         public void Shuffle()
         {
@@ -31,5 +37,7 @@ namespace MatchingGame.Behaviors
 
             return card;
         }
+
+        public Card Draw() => Draw(1);
     }
 }

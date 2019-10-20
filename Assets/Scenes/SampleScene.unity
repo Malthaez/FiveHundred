@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 106140327}
   - component: {fileID: 106140326}
   - component: {fileID: 106140319}
+  - component: {fileID: 106140322}
   - component: {fileID: 106140323}
   - component: {fileID: 106140321}
   - component: {fileID: 106140318}
@@ -269,6 +270,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09f6d283af0f5be4ba38ab7489834d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &106140322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106140316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eaef9c5e50a3fb4790a296efc53edbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deckPrefab: {fileID: 6272125764869993272, guid: 91273ca9f3ba0c9429fd14064a54fc73,
+    type: 3}
 --- !u!114 &106140323
 MonoBehaviour:
   m_ObjectHideFlags: 0
