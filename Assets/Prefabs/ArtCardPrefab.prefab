@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868687790846866621}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 483.06952, y: 347.931, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7264805791753648917}
@@ -129,8 +129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67b2b9eb749ab14b9d57383866c6e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardValue: 0
+  _cardSuit: 0
+  _value: 0
   _cardArt: {fileID: 5778551972543782942}
+  _dealSpeed: 60
 --- !u!1 &1997158037126901048
 GameObject:
   m_ObjectHideFlags: 0

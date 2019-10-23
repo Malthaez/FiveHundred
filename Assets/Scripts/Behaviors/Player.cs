@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Enums;
+﻿using MatchingGame.Enums;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,12 +14,19 @@ namespace MatchingGame.Behaviors
 
         public void AddToHand(Card card)
         {
-            card.transform.position = transform.position;
-            card.transform.SetParent(transform);
-
-            card.transform.position = transform.position + new Vector3 { x = 0.25f, y = 0f, z = 0.15f } * _hand.Count;
-
             _hand.Add(card);
+            card.transform.SetParent(transform);
+        }
+
+        public Vector3 GetNextCardPosition()
+        {
+            return transform.position + (new Vector3 { x = 0.25f, y = 0f, z = 0.15f } * _hand.Count);
+        }
+
+        public IEnumerator Draw(Deck deck)
+        {
+            deck.OnDrawEnd = AddToHand;
+            yield return deck.Draw(GetNextCardPosition());
         }
     }
 }

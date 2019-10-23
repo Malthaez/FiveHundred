@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Enums
+﻿namespace MatchingGame.Enums
 {
     public enum SeatPositionEnum
     {

@@ -106,7 +106,7 @@ namespace MatchingGame.Mediators
         {
             if (!Rules.ValidateCardCount(2, cards) || !Rules.CardSuitsAreSet(cards)) { return; }
 
-            if(Rules.CardSuitsMatch(cards) && Rules.CardValuesMatch(cards))
+            if (Rules.CardSuitsMatch(cards) && Rules.CardValuesMatch(cards))
             { MatchSuccess(cards); }
             else
             { MatchFailure(cards); }

@@ -11,6 +11,7 @@ namespace MatchingGame.Behaviors
         [SerializeField] private CardSuitsEnum _cardSuit;
         [SerializeField] private int _value;
         [SerializeField] private Image _cardArt;
+        [SerializeField] private float _dealSpeed = 60.0f;
 
         public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
         public int Value { get => _value; set => _value = value; }
@@ -20,13 +21,21 @@ namespace MatchingGame.Behaviors
 
         protected bool _flipping = false;
         protected bool _flipped = false;
+        protected bool _moving = false;
 
         public bool Flipping => _flipping;
 
-        public delegate void OnFlip(Card selectable);
+        public bool Moving { get => _moving; set => _moving = value; }
+
+        public delegate void OnFlip(Card card);
         public OnFlip OnFlipStart { get; set; }
         public OnFlip OnEachFlipFrame { get; set; }
         public OnFlip OnFlipEnd { get; set; }
+
+        public delegate void OnDraw(Card card);
+        public OnDraw OnDrawStart { get; set; }
+        public OnDraw OnEachDrawFrame { get; set; }
+        public OnDraw OnDrawEnd { get; set; }
 
         private void GetMouseInput()
         {
@@ -72,6 +81,36 @@ namespace MatchingGame.Behaviors
             _flipping = false;
 
             OnFlipEnd?.Invoke(this);
+        }
+
+        public IEnumerator Draw(Vector3 destinationPosition)
+        {
+            OnDrawStart?.Invoke(this);
+
+            _moving = true;
+
+            var startTime = Time.time;
+            var startPosition = transform.position;
+            var endPosition = destinationPosition;
+            var totalDistance = Vector3.Distance(startPosition, endPosition);
+
+            while (true)
+            {
+                OnEachDrawFrame?.Invoke(this);
+
+                var elapsedDistance = (Time.time - startTime) * _dealSpeed;
+                var t = Mathf.Clamp(elapsedDistance / totalDistance, 0f, 1.0f);
+
+                transform.position = Vector3.Lerp(startPosition, endPosition, t);
+
+                if (t >= 1.0f) { break; }
+
+                yield return null;
+            }
+
+            _moving = false;
+
+            OnDrawEnd?.Invoke(this);
         }
     }
 }

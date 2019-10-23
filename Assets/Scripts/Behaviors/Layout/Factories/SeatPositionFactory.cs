@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Enums;
+﻿using MatchingGame.Enums;
 using System.Collections.Generic;
 
 namespace MatchingGame.Behaviors.Layout.Factories

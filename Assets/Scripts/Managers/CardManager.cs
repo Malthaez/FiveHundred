@@ -123,38 +123,5 @@ namespace MatchingGame.Managers
                 cards[n] = value;
             }
         }
-
-        public void Deal(Player dealer, List<Player> players, Deck deck)
-        {
-            int n = players.IndexOf(dealer) + 1;
-            Debug.Log($"Player {n} is dealing");
-
-            foreach (var card in deck.Cards)
-            {
-                n = n >= players.Count - 1 ? 0 : n + 1;
-
-                players[n].AddToHand(card);
-            }
-        }
-
-        // Returns player who was dealt first Jack
-        public Player DealUntilFirstJack(List<Player> players, Deck deck)
-        {
-            int n = 0;
-
-            foreach (var card in deck.Cards)
-            {
-                if ((CardValuesEnum)card.Value == CardValuesEnum.Jack)
-                {
-                    return players[n];
-                }
-                else
-                {
-                    n = n == players.Count - 1 ? 0 : n + 1;
-                }
-            }
-
-            return null;
-        }
     }
 }

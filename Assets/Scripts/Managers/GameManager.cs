@@ -2,6 +2,7 @@
 using MatchingGame.Behaviors.Layout;
 using MatchingGame.Behaviors.Mappers;
 using MatchingGame.DataSource;
+using MatchingGame.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,15 +46,14 @@ namespace MatchingGame.Managers
 
         private void StartFiveHundredGame(List<Player> players)
         {
+            _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
+
             var deck = _cardManager.GetPlayingCardDeck();
 
             _cardManager.Register(deck.Cards);
             deck.Shuffle();
-            var player = _cardManager.DealUntilFirstJack(players, deck);
-            _cardManager.Deal(player, players, deck);
-
-            //_layoutManager.SetLayout(new CardGridLayout(cards.ToTransforms(), new[] { 0.8f, 1.1f }, 13));
-            _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
+            deck.StartDeal(players);
+            //_cardManager.Deal(deck, players, dealerIndex);
         }
     }
 }
