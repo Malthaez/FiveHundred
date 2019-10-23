@@ -1,5 +1,4 @@
 ﻿using MatchingGame.Enums;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,15 +17,6 @@ namespace MatchingGame.Behaviors
             card.transform.SetParent(transform);
         }
 
-        public Vector3 GetNextCardPosition()
-        {
-            return transform.position + (new Vector3 { x = 0.25f, y = 0f, z = 0.15f } * _hand.Count);
-        }
-
-        public IEnumerator Draw(Deck deck)
-        {
-            deck.OnDrawEnd = AddToHand;
-            yield return deck.Draw(GetNextCardPosition());
-        }
+        public Vector3 GetNextCardPosition() => transform.position + (new Vector3 { x = 0.25f, y = 0f, z = 0.15f } * _hand.Count);
     }
 }

@@ -11,7 +11,6 @@ namespace MatchingGame.Behaviors
         [SerializeField] private CardSuitsEnum _cardSuit;
         [SerializeField] private int _value;
         [SerializeField] private Image _cardArt;
-        [SerializeField] private float _dealSpeed = 60.0f;
 
         public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
         public int Value { get => _value; set => _value = value; }
@@ -32,10 +31,10 @@ namespace MatchingGame.Behaviors
         public OnFlip OnEachFlipFrame { get; set; }
         public OnFlip OnFlipEnd { get; set; }
 
-        public delegate void OnDraw(Card card);
-        public OnDraw OnDrawStart { get; set; }
-        public OnDraw OnEachDrawFrame { get; set; }
-        public OnDraw OnDrawEnd { get; set; }
+        public delegate void OnMove(Card card);
+        public OnMove OnMoveStart { get; set; }
+        public OnMove OnEachMoveFrame { get; set; }
+        public OnMove OnMoveEnd { get; set; }
 
         private void GetMouseInput()
         {
@@ -83,9 +82,9 @@ namespace MatchingGame.Behaviors
             OnFlipEnd?.Invoke(this);
         }
 
-        public IEnumerator Draw(Vector3 destinationPosition)
+        public IEnumerator MoveTo(Vector3 destinationPosition, float speed)
         {
-            OnDrawStart?.Invoke(this);
+            OnMoveStart?.Invoke(this);
 
             _moving = true;
 
@@ -96,9 +95,9 @@ namespace MatchingGame.Behaviors
 
             while (true)
             {
-                OnEachDrawFrame?.Invoke(this);
+                OnEachMoveFrame?.Invoke(this);
 
-                var elapsedDistance = (Time.time - startTime) * _dealSpeed;
+                var elapsedDistance = (Time.time - startTime) * speed;
                 var t = Mathf.Clamp(elapsedDistance / totalDistance, 0f, 1.0f);
 
                 transform.position = Vector3.Lerp(startPosition, endPosition, t);
@@ -110,7 +109,7 @@ namespace MatchingGame.Behaviors
 
             _moving = false;
 
-            OnDrawEnd?.Invoke(this);
+            OnMoveEnd?.Invoke(this);
         }
     }
 }
