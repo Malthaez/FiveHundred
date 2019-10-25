@@ -19,16 +19,55 @@ namespace MatchingGame.Mediators
             _players = players;
         }
 
+        public bool Register(Deck deck)
+        {
+            bool isRegistered = false;
+
+            try
+            {
+                if (deck == null) { return false; }
+                _deck = deck;
+                deck.transform.SetParent(deck.transform);
+                isRegistered = true;
+            }
+            catch { }
+
+            return isRegistered;
+        }
+
+        public bool Register(List<Player> players)
+        {
+            bool isRegistered = false;
+
+            try
+            {
+                if (players == null) { return false; }
+                _players = players;
+                isRegistered = true;
+            }
+            catch { }
+
+            return isRegistered;
+        }
+
         private void DealUntilFirstJack() => StartCoroutine(Deal((int)CardValuesEnum.Jack));
 
         public IEnumerator Draw(Player player, int count)
         {
-            for (int i = 0; i <= count; i++)
+            if (count <= 0) { yield break; }
+
+            for (int i = 0; i < count; i++)
             {
+                if (_deck.Cards.Count == 0)
+                {
+                    Debug.Log("Can't draw. There are no more cards.");
+                    yield break;
+                }
+
                 var card = _deck.Draw();
 
                 card.OnMoveEnd = player.AddToHand;
-                yield return card.MoveTo(player.GetNextCardPosition(), 60.0f);
+                yield return card.MoveTo(player.GetNextCardPosition(), 45.0f);
                 card.OnMoveEnd = null;
             }
         }
@@ -40,11 +79,13 @@ namespace MatchingGame.Mediators
 
             Debug.Log($"Player {_drawingPlayerIndex} is dealing");
 
-            foreach (var card in _deck.Cards)
+            for (int i = _deck.Cards.Count - 1; i >= 0; i--)
             {
                 _drawingPlayerIndex = _drawingPlayerIndex >= _players.Count - 1 ? 0 : _drawingPlayerIndex + 1;
-                var pause = stopCardValue != null && card.Value == stopCardValue ? 10.0f : 0f;
+                // var pause = stopCardValue != null && card.Value == stopCardValue ? 10.0f : 0f;
 
+                // Debug.Log(_deck.Cards.Count);
+                Debug.Log(i);
                 yield return Draw(_players[_drawingPlayerIndex], 1);
             }
         }

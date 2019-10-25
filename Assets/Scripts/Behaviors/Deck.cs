@@ -6,8 +6,10 @@ namespace MatchingGame.Behaviors
     public class Deck : MonoBehaviour
     {
         [SerializeField] private List<Card> _cards;
+        [SerializeField] private int _drawIndex;
 
         public List<Card> Cards { get => _cards; private set => _cards = value; }
+        public int DrawIndex => _drawIndex;
 
         public void AddCard(Card card)
         {
@@ -31,8 +33,14 @@ namespace MatchingGame.Behaviors
 
         public Card Draw()
         {
-            var card = _cards[0];
-            _cards.Remove(card);
+            Card card = null;
+
+            if (_drawIndex < _cards.Count)
+            {
+                card = _cards[_drawIndex];
+                _drawIndex++;
+            }
+
             return card;
         }
     }

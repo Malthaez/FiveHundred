@@ -2,7 +2,6 @@
 using MatchingGame.Behaviors.Layout;
 using MatchingGame.Behaviors.Mappers;
 using MatchingGame.DataSource;
-using MatchingGame.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +17,7 @@ namespace MatchingGame.Managers
         private CardManager _cardManager;
         private LayoutManager _layoutManager;
         private GameDataSource _gameDataSource;
+        private FiveHundredGameManager _fiveHundredGameManager;
 
         public void Initialize()
         {
@@ -25,10 +25,12 @@ namespace MatchingGame.Managers
             _cardManager = GetComponent<CardManager>();
             _layoutManager = GetComponent<LayoutManager>();
             _gameDataSource = GetComponent<GameDataSource>();
+            _fiveHundredGameManager = GetComponent<FiveHundredGameManager>();
 
             _scoreManager.Initialize(_gameDataSource.CardPairsCount);
             _cardManager.Initialize(_scoreManager);
             _layoutManager.Initialize();
+            _fiveHundredGameManager.Initialize(_gameDataSource.Players);
 
             //StartMemoryGame(_gameDataSource.CardPairsCount);
             StartFiveHundredGame(_gameDataSource.Players);
@@ -46,14 +48,14 @@ namespace MatchingGame.Managers
 
         private void StartFiveHundredGame(List<Player> players)
         {
-            _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
-
             var deck = _cardManager.GetPlayingCardDeck();
 
             _cardManager.Register(deck.Cards);
-            deck.Shuffle();
-            deck.StartDeal(players);
-            //_cardManager.Deal(deck, players, dealerIndex);
+            _fiveHundredGameManager.Register(deck);
+            _fiveHundredGameManager.Register(players);
+            _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
+
+            StartCoroutine(_fiveHundredGameManager.FiveHundredGame(deck));
         }
     }
 }
