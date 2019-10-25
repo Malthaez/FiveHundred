@@ -3,6 +3,7 @@ using MatchingGame.Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MatchingGame.Behaviors.Deck;
 
 namespace MatchingGame.Mediators
 {
@@ -13,6 +14,10 @@ namespace MatchingGame.Mediators
 
         private int _dealerIndex;
         private int _drawingPlayerIndex;
+
+        public OnDraw OnDrawStart;
+        public OnDraw OnEachDrawFrame;
+        public OnDraw OnDrawEnd;
 
         public void Initialize(List<Player> players)
         {
@@ -54,6 +59,8 @@ namespace MatchingGame.Mediators
 
         public IEnumerator Draw(Player player, int count)
         {
+            OnDrawStart?.Invoke();
+
             if (count <= 0) { yield break; }
 
             for (int i = 0; i < count; i++)
@@ -64,12 +71,16 @@ namespace MatchingGame.Mediators
                     yield break;
                 }
 
+                OnEachDrawFrame?.Invoke();
+
                 var card = _deck.Draw();
 
                 card.OnMoveEnd = player.AddToHand;
                 yield return card.MoveTo(player.GetNextCardPosition(), 45.0f);
                 card.OnMoveEnd = null;
             }
+
+            OnDrawEnd?.Invoke();
         }
 
         public IEnumerator Deal(int? stopCardValue)
@@ -79,15 +90,20 @@ namespace MatchingGame.Mediators
 
             Debug.Log($"Player {_drawingPlayerIndex} is dealing");
 
-            for (int i = _deck.Cards.Count - 1; i >= 0; i--)
+            int count = _deck.Cards.Count;
+
+            _deck.OnSuccessfulDraw = () => count--;
+
+            while (count > 0)
             {
                 _drawingPlayerIndex = _drawingPlayerIndex >= _players.Count - 1 ? 0 : _drawingPlayerIndex + 1;
                 // var pause = stopCardValue != null && card.Value == stopCardValue ? 10.0f : 0f;
 
-                // Debug.Log(_deck.Cards.Count);
-                Debug.Log(i);
+                Debug.Log(count);
                 yield return Draw(_players[_drawingPlayerIndex], 1);
             }
+
+            _deck.OnSuccessfulDraw = null;
         }
     }
 }

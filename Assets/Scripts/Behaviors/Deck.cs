@@ -8,6 +8,10 @@ namespace MatchingGame.Behaviors
         [SerializeField] private List<Card> _cards;
         [SerializeField] private int _drawIndex;
 
+        public delegate void OnDraw();
+        public OnDraw OnSuccessfulDraw;
+        public OnDraw OnFailedDraw;
+
         public List<Card> Cards { get => _cards; private set => _cards = value; }
         public int DrawIndex => _drawIndex;
 
@@ -37,8 +41,13 @@ namespace MatchingGame.Behaviors
 
             if (_drawIndex < _cards.Count)
             {
+                OnSuccessfulDraw();
                 card = _cards[_drawIndex];
                 _drawIndex++;
+            }
+            else
+            {
+                OnFailedDraw();
             }
 
             return card;
