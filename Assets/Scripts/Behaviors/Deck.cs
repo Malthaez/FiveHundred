@@ -59,10 +59,8 @@ namespace MatchingGame.Behaviors
             // Start dealing to the left of the dealer
             int n = dealerIndex + 1;
 
-            Debug.Log($"Player {n} is dealing");
-
+            // Get deck's card count since we can't alter the deck's contents while looping
             int count = _cards.Count;
-
             OnSuccessfulDraw = () => count--;
 
             while (count > 0)
