@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MatchingGame.Behaviors
@@ -51,6 +52,29 @@ namespace MatchingGame.Behaviors
             }
 
             return card;
+        }
+
+        public IEnumerator Deal(List<Player> players, int dealerIndex, int? stopCardValue)
+        {
+            // Start dealing to the left of the dealer
+            int n = dealerIndex + 1;
+
+            Debug.Log($"Player {n} is dealing");
+
+            int count = _cards.Count;
+
+            OnSuccessfulDraw = () => count--;
+
+            while (count > 0)
+            {
+                n = n >= players.Count - 1 ? 0 : n + 1;
+                // var pause = stopCardValue != null && card.Value == stopCardValue ? 10.0f : 0f;
+
+                Debug.Log(count);
+                yield return players[n].Draw(this, 1);
+            }
+
+            OnSuccessfulDraw = null;
         }
     }
 }
