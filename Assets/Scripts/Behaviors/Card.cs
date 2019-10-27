@@ -8,23 +8,33 @@ namespace MatchingGame.Behaviors
     [RequireComponent(typeof(Collider))]
     public class Card : MonoBehaviour
     {
-        public CardValuesEnum _cardValue;
-        public Image _cardArt;
+        [SerializeField] private CardSuitsEnum _cardSuit;
+        [SerializeField] private int _value;
+        [SerializeField] private Image _cardArt;
 
-        public CardValuesEnum CardValue { get => _cardValue; set => _cardValue = value; }
-        public Sprite CardArt { get => _cardArt.sprite; set => _cardArt.sprite = value; }
+        public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
+        public int Value { get => _value; set => _value = value; }
+        public Sprite Art { get => _cardArt.sprite; set => _cardArt.sprite = value; }
 
         //========
 
         protected bool _flipping = false;
-        protected bool _flipped  = false;
+        protected bool _flipped = false;
+        protected bool _moving = false;
 
         public bool Flipping => _flipping;
 
-        public delegate void OnFlip(Card selectable);
+        public bool Moving { get => _moving; set => _moving = value; }
+
+        public delegate void OnFlip(Card card);
         public OnFlip OnFlipStart { get; set; }
         public OnFlip OnEachFlipFrame { get; set; }
         public OnFlip OnFlipEnd { get; set; }
+
+        public delegate void OnMove(Card card);
+        public OnMove OnMoveStart { get; set; }
+        public OnMove OnEachMoveFrame { get; set; }
+        public OnMove OnMoveEnd { get; set; }
 
         private void GetMouseInput()
         {
@@ -43,7 +53,7 @@ namespace MatchingGame.Behaviors
             OnFlipStart?.Invoke(this);
 
             _flipping = true;
-            float t   = 0f;
+            float t = 0f;
 
             while (true)
             {
@@ -66,10 +76,40 @@ namespace MatchingGame.Behaviors
 
             yield return new WaitForSeconds(pause);
 
-            _flipped  = !_flipped;
+            _flipped = !_flipped;
             _flipping = false;
 
             OnFlipEnd?.Invoke(this);
+        }
+
+        public IEnumerator MoveTo(Vector3 destinationPosition, float speed)
+        {
+            OnMoveStart?.Invoke(this);
+
+            _moving = true;
+
+            var startTime = Time.time;
+            var startPosition = transform.position;
+            var endPosition = destinationPosition;
+            var totalDistance = Vector3.Distance(startPosition, endPosition);
+
+            while (true)
+            {
+                OnEachMoveFrame?.Invoke(this);
+
+                var elapsedDistance = (Time.time - startTime) * speed;
+                var t = Mathf.Clamp(elapsedDistance / totalDistance, 0f, 1.0f);
+
+                transform.position = Vector3.Lerp(startPosition, endPosition, t);
+
+                if (t >= 1.0f) { break; }
+
+                yield return null;
+            }
+
+            _moving = false;
+
+            OnMoveEnd?.Invoke(this);
         }
     }
 }

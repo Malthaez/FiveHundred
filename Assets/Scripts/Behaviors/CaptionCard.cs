@@ -2,7 +2,7 @@
 
 namespace MatchingGame.Behaviors
 {
-    public class MemoryCard : Card
+    public class CaptionCard : Card
     {
         public Text _cardText;
 

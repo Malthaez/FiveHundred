@@ -6,7 +6,7 @@ namespace MatchingGame
     [RequireComponent(typeof(GameManager))]
     public class GameHost : MonoBehaviour
     {
-        public GameManager _gameManager;
+        [SerializeField] private GameManager _gameManager;
 
         private void Awake()
         {

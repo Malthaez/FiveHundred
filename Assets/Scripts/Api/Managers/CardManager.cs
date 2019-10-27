@@ -8,10 +8,7 @@ namespace MatchingGame.Api.Managers
     {
         private readonly ICardRepository _cardRepository;
 
-        public CardManager(ICardRepository cardRepository)
-        {
-            _cardRepository = cardRepository;
-        }
+        public CardManager(ICardRepository cardRepository) => _cardRepository = cardRepository;
 
         public Card Get(Card card) => _cardRepository.Get(card.CardValue);
     }

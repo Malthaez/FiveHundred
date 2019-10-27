@@ -11,21 +11,25 @@ namespace MatchingGame.Managers
     [RequireComponent(typeof(CardMediator))]
     [RequireComponent(typeof(MemoryCardRepository))]
     [RequireComponent(typeof(PlayingCardRepository))]
+    [RequireComponent(typeof(DeckRepository))]
     public class CardManager : MonoBehaviour
     {
         private CardMediator _cardMediator;
         private MemoryCardRepository _cardRepository;
         private PlayingCardRepository _playingCardRepository;
+        private DeckRepository _deckRepository;
 
         public void Initialize(ScoreManager scoreManager)
         {
             _cardMediator = GetComponent<CardMediator>();
             _cardRepository = GetComponent<MemoryCardRepository>();
             _playingCardRepository = GetComponent<PlayingCardRepository>();
+            _deckRepository = GetComponent<DeckRepository>();
 
             _cardMediator.Initialize(scoreManager);
             _cardRepository.Initialize(CardServiceHost.CreateCardService());
             _playingCardRepository.Initialize(CardServiceHost.CreateCardService());
+            _deckRepository.Initialize();
         }
 
         public bool Register(Card card) => _cardMediator.Register(card);
@@ -42,9 +46,51 @@ namespace MatchingGame.Managers
             return isRegistered;
         }
 
-        public MemoryCard CreateCard(CardValuesEnum cardValue) => _cardRepository.CreateCardPrefab(cardValue);
+        public CaptionCard CreateCard(CardSuitsEnum cardValue) => _cardRepository.CreateMemoryCardPrefab(cardValue);
 
-        public Card CreatePlayingCard(CardValuesEnum cardValue) => _playingCardRepository.CreatePlayingCardPrefab(cardValue);
+        public Card CreatePlayingCard(CardSuitsEnum cardSuit, CardValuesEnum cardValue) => _playingCardRepository.CreatePlayingCardPrefab(cardSuit, cardValue);
+
+        public Deck GetPlayingCardDeck()
+        {
+            var deck = _deckRepository.CreateDeckPrefab();
+
+            var cards= new List<Card>();
+
+            HashSet<CardSuitsEnum> suits = new HashSet<CardSuitsEnum>
+            {
+                CardSuitsEnum.Club,
+                CardSuitsEnum.Spade,
+                CardSuitsEnum.Diamond,
+                CardSuitsEnum.Heart,
+            };
+
+            HashSet<CardValuesEnum> values = new HashSet<CardValuesEnum>
+            {
+                CardValuesEnum.Ace,
+                CardValuesEnum.Two,
+                CardValuesEnum.Three,
+                CardValuesEnum.Four,
+                CardValuesEnum.Five,
+                CardValuesEnum.Six,
+                CardValuesEnum.Seven,
+                CardValuesEnum.Eight,
+                CardValuesEnum.Nine,
+                CardValuesEnum.Ten,
+                CardValuesEnum.Jack,
+                CardValuesEnum.Queen,
+                CardValuesEnum.King
+            };
+
+            foreach (var suit in suits)
+            {
+                foreach (var value in values)
+                {
+                    deck.AddCard(CreatePlayingCard(suit, value));
+                }
+            }
+
+            return deck;
+        }
 
         public List<Card> GetCardPairs(int cardPairsCount)
         {
@@ -52,13 +98,13 @@ namespace MatchingGame.Managers
 
             for (int i = 0; i < cardPairsCount; i++)
             {
-                var cardValue = (CardValuesEnum)(i + 1 - (((int)CardValuesEnum.MAX - 1) * (i / ((int)CardValuesEnum.MAX - 1))));
+                var cardValue = (CardSuitsEnum)(i + 1 - (((int)CardSuitsEnum.MAX - 1) * (i / ((int)CardSuitsEnum.MAX - 1))));
                 //var cardValue = (CardValuesEnum)Random.Range(1, (int)CardValuesEnum.MAX);
 
                 //cards.Add(CreateCard(cardValue));
                 //cards.Add(CreateCard(cardValue));
-                cards.Add(CreatePlayingCard(cardValue));
-                cards.Add(CreatePlayingCard(cardValue));
+                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)(i + 1)));
+                cards.Add(CreatePlayingCard(CardSuitsEnum.Club, (CardValuesEnum)(i + 1)));
             }
 
             return cards;
