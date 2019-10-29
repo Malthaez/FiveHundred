@@ -2,6 +2,7 @@
 using MatchingGame.Behaviors.Layout;
 using MatchingGame.Behaviors.Mappers;
 using MatchingGame.DataSource;
+using MatchingGame.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,7 +51,9 @@ namespace MatchingGame.Managers
             _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
 
             deck.Shuffle();
-            StartCoroutine(players[0].Deal(players, deck, null));
+
+            StartCoroutine(players[0].DealUntilFirstJack(players, deck));
+            // StartCoroutine(players[0].Deal(players, deck));
         }
     }
 }

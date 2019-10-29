@@ -9,7 +9,7 @@ namespace MatchingGame.Behaviors
         [SerializeField] private List<Card> _cards;
         [SerializeField] private int _drawIndex;
 
-        public delegate void OnDraw();
+        public delegate IEnumerator OnDraw(Card card);
         public OnDraw OnSuccessfulDraw;
         public OnDraw OnFailedDraw;
 
@@ -36,43 +36,38 @@ namespace MatchingGame.Behaviors
             }
         }
 
-        public Card Draw()
+        public IEnumerator Draw()
         {
             Card card = null;
+            var drawCallback = OnFailedDraw;
 
             if (_drawIndex < _cards.Count)
             {
-                OnSuccessfulDraw();
                 card = _cards[_drawIndex];
+                drawCallback = OnSuccessfulDraw;
                 _drawIndex++;
             }
-            else
-            {
-                OnFailedDraw();
-            }
 
-            return card;
+            yield return drawCallback(card);
         }
 
-        public IEnumerator Deal(List<Player> players, int dealerIndex, int? stopCardValue)
+        public IEnumerator Deal(List<Player> players, int dealerIndex)
         {
             // Start dealing to the left of the dealer
             int n = dealerIndex + 1;
 
             // Get deck's card count since we can't alter the deck's contents while looping
             int count = _cards.Count;
-            OnSuccessfulDraw = () => count--;
 
             while (count > 0)
             {
                 n = n >= players.Count - 1 ? 0 : n + 1;
-                // var pause = stopCardValue != null && card.Value == stopCardValue ? 10.0f : 0f;
 
                 Debug.Log(count);
+                OnSuccessfulDraw += (Card card) => { count--; return null; };
                 yield return players[n].Draw(this, 1);
+                OnSuccessfulDraw = null;
             }
-
-            OnSuccessfulDraw = null;
         }
     }
 }
