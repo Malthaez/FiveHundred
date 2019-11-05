@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MatchingGame.Utilities.Utilities;
 
 namespace MatchingGame.Behaviors
 {
@@ -9,9 +11,9 @@ namespace MatchingGame.Behaviors
         [SerializeField] private List<Card> _cards;
         [SerializeField] private int _drawIndex;
 
-        public delegate IEnumerator OnDraw(Card card);
-        public OnDraw OnSuccessfulDraw;
-        public OnDraw OnFailedDraw;
+        //public delegate void OnDraw(Card card);
+        //public OnDraw OnSuccessfulDraw;
+        //public OnDraw OnFailedDraw;
 
         public List<Card> Cards { get => _cards; private set => _cards = value; }
         public int DrawIndex => _drawIndex;
@@ -29,45 +31,45 @@ namespace MatchingGame.Behaviors
             while (n > 1)
             {
                 n--;
-                int k = Random.Range(0, n + 1);
+                int k = UnityEngine.Random.Range(0, n + 1);
                 Card value = _cards[k];
                 _cards[k] = _cards[n];
                 _cards[n] = value;
             }
         }
 
-        public IEnumerator Draw()
+        private List<Coroutine> GetReturnCardCoroutines()
+        {
+            var coroutines = new List<Coroutine>();
+
+            foreach (var card in _cards)
+            {
+                coroutines.Add(StartCoroutine(card.MoveTo(transform.position, 60.0f)));
+            }
+
+            return coroutines;
+        }
+
+        public IEnumerator ReturnCards()
+        {
+            yield return AwaitAllCoroutines(GetReturnCardCoroutines());
+        }
+
+        public void Draw(Action<Card> onSuccessfulDraw) => Draw(onSuccessfulDraw, (Card _) => { });
+
+        public void Draw(Action<Card> onSuccessfulDraw, Action<Card> onFailedDraw)
         {
             Card card = null;
-            var drawCallback = OnFailedDraw;
+            var drawCallback = onFailedDraw;
 
             if (_drawIndex < _cards.Count)
             {
                 card = _cards[_drawIndex];
-                drawCallback = OnSuccessfulDraw;
+                drawCallback = onSuccessfulDraw;
                 _drawIndex++;
             }
 
-            yield return drawCallback(card);
-        }
-
-        public IEnumerator Deal(List<Player> players, int dealerIndex)
-        {
-            // Start dealing to the left of the dealer
-            int n = dealerIndex + 1;
-
-            // Get deck's card count since we can't alter the deck's contents while looping
-            int count = _cards.Count;
-
-            while (count > 0)
-            {
-                n = n >= players.Count - 1 ? 0 : n + 1;
-
-                Debug.Log(count);
-                OnSuccessfulDraw += (Card card) => { count--; return null; };
-                yield return players[n].Draw(this, 1);
-                OnSuccessfulDraw = null;
-            }
+            drawCallback(card);
         }
     }
 }
