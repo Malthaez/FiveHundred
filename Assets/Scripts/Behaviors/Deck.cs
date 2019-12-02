@@ -34,21 +34,24 @@ namespace MatchingGame.Behaviors
             }
         }
 
-        private List<Coroutine> GetReturnCardCoroutines()
+        private List<Coroutine> GetReturnCardCoroutines(IEnumerable<Card> cards)
         {
             var coroutines = new List<Coroutine>();
 
-            foreach (var card in _cards)
+            foreach (var card in cards)
             {
+                card.OnMoveEnd = (Card _card) => card.transform.parent = transform;
                 coroutines.Add(StartCoroutine(card.MoveTo(transform.position, 60.0f)));
+                card.OnMoveEnd = null;
             }
 
             return coroutines;
         }
 
-        public IEnumerator ReturnCards()
+        public IEnumerator ReturnCards(IEnumerable<Card> cards)
         {
-            yield return AwaitAllCoroutines(GetReturnCardCoroutines());
+            yield return AwaitAllCoroutines(GetReturnCardCoroutines(cards));
+            _drawIndex = 0;
         }
 
         public IEnumerator Draw(Player player, Action<Player, Card> onSuccessfulDraw, Func<Card, IEnumerator> awaitOnSuccessfulDraw)

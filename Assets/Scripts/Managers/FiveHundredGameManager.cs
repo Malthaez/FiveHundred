@@ -9,16 +9,33 @@ namespace MatchingGame.Managers
     {
         public void Initialize() { }
 
+        public IEnumerator ReturnCardsToDeck(IEnumerable<Player> players, Deck deck)
+        {
+            List<Card> cards = new List<Card>();
+
+            foreach (var player in players)
+            {
+                foreach (var card in player.Hand)
+                {
+                    cards.Add(card);
+                }
+
+                player.DiscardHand();
+            }
+
+            return deck.ReturnCards(cards);
+        }
+
         public IEnumerator StartFiveHundredGame(List<Player> players, Deck deck)
         {
             deck.Shuffle();
             Player dealer = null;
 
             yield return players[0].Deal(players, deck, (Player player, Card card) => dealer = Rules.CheckForJack(card) ? player : dealer, () => dealer == null);
-            // yield return deck.ReturnCards();
-            // yield return dealer.Deal(players, deck);
-            Debug.Log("Done!");
             Debug.Log(dealer);
+            yield return ReturnCardsToDeck(players, deck);
+            yield return dealer.Deal(players, deck, null, null);
+            Debug.Log("Done!");
         }
     }
 }
