@@ -1,10 +1,8 @@
 ﻿using MatchingGame.Enums;
-using MatchingGame.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MatchingGame.Utilities.Utilities;
 
 namespace MatchingGame.Behaviors
 {
@@ -14,9 +12,6 @@ namespace MatchingGame.Behaviors
         [SerializeField] private List<Card> _hand;
 
         public SeatPositionEnum Seat { get => _seat; set => _seat = value; }
-
-        //public OnDraw OnDrawSuccess;
-        //public OnDraw OnFailedDraw;
 
         public void AddToHand(Card card)
         {
@@ -29,39 +24,19 @@ namespace MatchingGame.Behaviors
             _hand.Clear();
         }
 
-        // Belongs in a rules class
-        public IEnumerator CheckForJack(Card card) { yield return card.Value == (int)CardValuesEnum.Jack ? new WaitForSeconds(0.5f) : null; }
-
         public Vector3 GetNextCardPosition() => transform.position + (new Vector3 { x = 0.25f, y = 0f, z = 0.15f } * _hand.Count);
 
-        public IEnumerator Draw(Deck deck, int count, CoroutineAction<Card> actions)
+        public IEnumerator Draw(Deck deck, int drawCount, Action<Player, Card> onSuccessfulDraw)
         {
-            if (count <= 0) { yield break; }
+            if (drawCount <= 0) { yield break; }
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < drawCount; i++)
             {
-                Card card = null;
-
-                deck.Draw((Card _card) => { card = _card; });
-
-                card.OnMoveEnd = AddToHand;
-                yield return card.MoveTo(GetNextCardPosition(), 45.0f);
-                card.OnMoveEnd = null;
-
-                if (card != null)
-                {
-                    actions.onSuccess(card);
-                    //yield return AwaitAllCoroutines(actions.yieldOnSuccess);
-                }
-                else
-                {
-                    actions.onFailure(card);
-                    //yield return AwaitAllCoroutines(actions.yieldOnFailure);
-                }
+                yield return deck.Draw(this, onSuccessfulDraw += (Player player, Card card) => AddToHand(card), (Card card) => card.MoveTo(GetNextCardPosition(), 45.0f));
             }
         }
 
-        public IEnumerator Deal(List<Player> players, Deck deck)
+        public IEnumerator Deal(List<Player> players, Deck deck, Action<Player, Card> onSuccessfulDraw, Func<bool> continueDeal)
         {
             // Start dealing to the left of the dealer
             var n = players.IndexOf(this) + 1;
@@ -70,25 +45,14 @@ namespace MatchingGame.Behaviors
             // Get deck's card count since we can't alter the deck's contents while looping
             int count = deck.Cards.Count;
 
-            var drawActions = new CoroutineAction<Card>
-            {
-                onSuccess = (Card card) => { count--; }
-            };
-
-            while (count > 0)
+            while (count > 0 && (continueDeal != null ? continueDeal() : true))
             {
                 n++;
                 n %= players.Count;
 
                 Debug.Log(count);
-                yield return players[n].Draw(deck, 1, drawActions);
+                yield return players[n].Draw(deck, 1, onSuccessfulDraw += (Player player, Card card) => { count--; });
             }
-        }
-
-        public IEnumerator DealUntilFirstJack(List<Player> players, Deck deck)
-        {
-            // players.ForEach((player) => player.OnDrawSuccess += player.CheckForJack);
-            yield return Deal(players, deck);
         }
     }
 }

@@ -12,9 +12,13 @@ namespace MatchingGame.Managers
         public IEnumerator StartFiveHundredGame(List<Player> players, Deck deck)
         {
             deck.Shuffle();
-            yield return players[0].DealUntilFirstJack(players, deck);
-            yield return deck.ReturnCards();
+            Player dealer = null;
+
+            yield return players[0].Deal(players, deck, (Player player, Card card) => dealer = Rules.CheckForJack(card) ? player : dealer, () => dealer == null);
+            // yield return deck.ReturnCards();
+            // yield return dealer.Deal(players, deck);
             Debug.Log("Done!");
+            Debug.Log(dealer);
         }
     }
 }

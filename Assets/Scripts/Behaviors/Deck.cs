@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MatchingGame.Utilities.Utilities;
+using static MatchingGame.Utilities.CoroutineUtilities;
 
 namespace MatchingGame.Behaviors
 {
@@ -10,10 +10,6 @@ namespace MatchingGame.Behaviors
     {
         [SerializeField] private List<Card> _cards;
         [SerializeField] private int _drawIndex;
-
-        //public delegate void OnDraw(Card card);
-        //public OnDraw OnSuccessfulDraw;
-        //public OnDraw OnFailedDraw;
 
         public List<Card> Cards { get => _cards; private set => _cards = value; }
         public int DrawIndex => _drawIndex;
@@ -55,21 +51,22 @@ namespace MatchingGame.Behaviors
             yield return AwaitAllCoroutines(GetReturnCardCoroutines());
         }
 
-        public void Draw(Action<Card> onSuccessfulDraw) => Draw(onSuccessfulDraw, (Card _) => { });
-
-        public void Draw(Action<Card> onSuccessfulDraw, Action<Card> onFailedDraw)
+        public IEnumerator Draw(Player player, Action<Player, Card> onSuccessfulDraw, Func<Card, IEnumerator> awaitOnSuccessfulDraw)
         {
             Card card = null;
-            var drawCallback = onFailedDraw;
+            Action<Player, Card> callback = null;
+            Func<Card, IEnumerator> awaitCallback = null;
 
             if (_drawIndex < _cards.Count)
             {
                 card = _cards[_drawIndex];
-                drawCallback = onSuccessfulDraw;
+                callback = onSuccessfulDraw;
+                awaitCallback = awaitOnSuccessfulDraw;
                 _drawIndex++;
             }
 
-            drawCallback(card);
+            callback(player, card);
+            yield return awaitCallback.Invoke(card);
         }
     }
 }
