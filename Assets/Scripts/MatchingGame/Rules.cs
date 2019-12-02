@@ -6,6 +6,8 @@ namespace MatchingGame
 {
     public static class Rules
     {
+        public static bool CheckForJack(Card card) => card.Value == (int)CardValuesEnum.Jack;
+
         //Returns false if any card's suit in a collection are "NotSet"
         public static bool CardSuitsAreSet(IEnumerable<Card> cards)
         {

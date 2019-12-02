@@ -10,12 +10,14 @@ namespace MatchingGame.Managers
     [RequireComponent(typeof(ScoreManager))]
     [RequireComponent(typeof(CardManager))]
     [RequireComponent(typeof(LayoutManager))]
+    [RequireComponent(typeof(FiveHundredGameManager))]
     [RequireComponent(typeof(GameDataSource))]
     public class GameManager : MonoBehaviour
     {
         private ScoreManager _scoreManager;
         private CardManager _cardManager;
         private LayoutManager _layoutManager;
+        private FiveHundredGameManager _fiveHundredGameManager;
         private GameDataSource _gameDataSource;
 
         public void Initialize()
@@ -23,11 +25,13 @@ namespace MatchingGame.Managers
             _scoreManager = GetComponent<ScoreManager>();
             _cardManager = GetComponent<CardManager>();
             _layoutManager = GetComponent<LayoutManager>();
+            _fiveHundredGameManager = GetComponent<FiveHundredGameManager>();
             _gameDataSource = GetComponent<GameDataSource>();
 
             _scoreManager.Initialize(_gameDataSource.CardPairsCount);
             _cardManager.Initialize(_scoreManager);
             _layoutManager.Initialize();
+            _fiveHundredGameManager.Initialize();
 
             // StartMemoryGame(_gameDataSource.CardPairsCount);
             StartFiveHundredGame(_gameDataSource.Players);
@@ -45,12 +49,11 @@ namespace MatchingGame.Managers
 
         private void StartFiveHundredGame(List<Player> players)
         {
-            var deck = _cardManager.GetPlayingCardDeck();
-
             _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
 
-            deck.Shuffle();
-            StartCoroutine(players[0].Deal(players, deck, null));
+            var deck = _cardManager.GetPlayingCardDeck();
+
+            StartCoroutine(_fiveHundredGameManager.StartFiveHundredGame(players, deck));
         }
     }
 }
