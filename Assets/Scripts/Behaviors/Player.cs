@@ -35,7 +35,7 @@ namespace MatchingGame.Behaviors
 
             for (int i = 0; i < drawCount; i++)
             {
-                yield return deck.Draw(this, onSuccessfulDraw, (Card card) => card.MoveTo(GetNextCardPosition(), 45.0f));
+                yield return deck.Draw(this, onSuccessfulDraw, (Card card) => card.MoveTo(GetNextCardPosition(), 45.0f, () => { if (_seat == SeatPositionEnum.Bottom) { card.FlipUp(); } }));
             }
         }
 
@@ -55,7 +55,7 @@ namespace MatchingGame.Behaviors
                 n++;
                 n %= players.Count;
 
-                Debug.Log(count);
+                // Debug.Log(count);
                 yield return players[n].Draw(deck, 1, onSuccessfulDraw);
             }
         }

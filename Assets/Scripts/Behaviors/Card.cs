@@ -1,4 +1,5 @@
 ﻿using MatchingGame.Enums;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,105 +12,130 @@ namespace MatchingGame.Behaviors
         [SerializeField] private CardSuitsEnum _cardSuit;
         [SerializeField] private int _value;
         [SerializeField] private Image _cardArt;
+        [SerializeField] private Image _cardBack;
 
         public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
         public int Value { get => _value; set => _value = value; }
         public Sprite Art { get => _cardArt.sprite; set => _cardArt.sprite = value; }
+        public Sprite Back { get => _cardBack.sprite; set => _cardBack.sprite = value; }
 
         //========
 
         protected bool _flipping = false;
         protected bool _flipped = false;
         protected bool _moving = false;
+        private Coroutine _flipCoroutine;
 
         public bool Flipping => _flipping;
+        public bool Flipped => _flipped;
 
         public bool Moving { get => _moving; set => _moving = value; }
+        public Coroutine FlipCoroutine { get => _flipCoroutine; set => _flipCoroutine = value; }
 
         public delegate void OnFlip(Card card);
         public OnFlip OnFlipStart { get; set; }
         public OnFlip OnEachFlipFrame { get; set; }
         public OnFlip OnFlipEnd { get; set; }
 
-        public delegate void OnMove(Card card);
-        public OnMove OnMoveStart { get; set; }
-        public OnMove OnEachMoveFrame { get; set; }
-        public OnMove OnMoveEnd { get; set; }
-
         private void GetMouseInput()
         {
             /* Mouse Left */
-            if (Input.GetMouseButtonUp(0)) { if (!_flipping && !_flipped) { StartCoroutine(Flip(180f, 0.25f, 0.25f)); } }
+            if (Input.GetMouseButtonUp(0)) { if (!_flipping && !_flipped) { FlipUp(); } }
             /* Mouse Right */
-            if (Input.GetMouseButtonUp(1)) { if (!_flipping && _flipped) { StartCoroutine(Flip(180f, 0.25f, 0.25f)); } }
+            if (Input.GetMouseButtonUp(1)) { if (!_flipping && _flipped) { FlipDown(); } }
             /* Mouse Middle */
             if (Input.GetMouseButtonUp(2)) { }
         }
 
         private void OnMouseOver() => GetMouseInput();
 
-        public IEnumerator Flip(float rotation, float duration, float pause)
+        public Coroutine FlipDown(float duration, float pause)
+        {
+            if (_flipCoroutine != null) { StopCoroutine(_flipCoroutine); }
+            _flipCoroutine = StartCoroutine(IFlip(-180f, duration, pause));
+            return _flipCoroutine;
+        }
+
+        public Coroutine FlipDown(float duration) => FlipDown(duration, 0.1f);
+
+        public Coroutine FlipDown() => FlipDown(0.1f);
+
+        public Coroutine FlipUp(float duration, float pause)
+        {
+            if (_flipCoroutine != null) { StopCoroutine(_flipCoroutine); }
+            _flipCoroutine = StartCoroutine(IFlip(180f, duration, pause));
+            return _flipCoroutine;
+        }
+
+        public Coroutine FlipUp(float duration) => FlipUp(duration, 0.1f);
+
+        public Coroutine FlipUp() => FlipUp(0.1f);
+
+        private IEnumerator IFlip(float rotation, float duration, float pause)
         {
             OnFlipStart?.Invoke(this);
 
-            _flipping = true;
-            float t = 0f;
-
-            while (true)
+            if (rotation != 0)
             {
-                OnEachFlipFrame?.Invoke(this);
+                var totalDuration = duration * Math.Abs(rotation / 180f);
+                var t = 0f;
+                _flipping = true;
 
-                float incrementalRotation = (rotation / duration) * Time.deltaTime;
+                while (true)
+                {
+                    OnEachFlipFrame?.Invoke(this);
 
-                if (t + incrementalRotation > rotation)
-                {
-                    transform.Rotate(new Vector3 { z = rotation - t });
-                    break;
+                    float incrementalRotation = (rotation / totalDuration) * Time.deltaTime;
+
+                    if (Math.Abs(t + incrementalRotation) > Math.Abs(rotation))
+                    {
+                        transform.Rotate(new Vector3 { z = rotation - t });
+                        break;
+                    }
+                    else
+                    {
+                        t += incrementalRotation;
+                        transform.Rotate(new Vector3 { z = incrementalRotation });
+                        yield return null;
+                    }
                 }
-                else
-                {
-                    t += incrementalRotation;
-                    transform.Rotate(new Vector3 { z = incrementalRotation });
-                    yield return null;
-                }
+
+                yield return new WaitForSeconds(pause);
+
+                _flipped = !_flipped;
+                _flipping = false;
             }
-
-            yield return new WaitForSeconds(pause);
-
-            _flipped = !_flipped;
-            _flipping = false;
 
             OnFlipEnd?.Invoke(this);
         }
 
-        public IEnumerator MoveTo(Vector3 destinationPosition, float speed)
+        public IEnumerator MoveTo(Vector3 destinationPosition, float speed, Action onMoveEnd)
         {
-            OnMoveStart?.Invoke(this);
-
-            _moving = true;
-
             var startTime = Time.time;
             var startPosition = transform.position;
             var endPosition = destinationPosition;
             var totalDistance = Vector3.Distance(startPosition, endPosition);
+            var t = 0f;
 
-            while (true)
+            _moving = true;
+
+            if (totalDistance != 0)
             {
-                OnEachMoveFrame?.Invoke(this);
+                while (t < 1.0f)
+                {
+                    var elapsedDistance = (Time.time - startTime) * speed;
+                    t = Mathf.Clamp(elapsedDistance / totalDistance, 0f, 1.0f);
 
-                var elapsedDistance = (Time.time - startTime) * speed;
-                var t = Mathf.Clamp(elapsedDistance / totalDistance, 0f, 1.0f);
+                    transform.position = Vector3.Lerp(startPosition, endPosition, t);
 
-                transform.position = Vector3.Lerp(startPosition, endPosition, t);
-
-                if (t >= 1.0f) { break; }
-
-                yield return null;
+                    yield return null;
+                }
             }
 
             _moving = false;
 
-            OnMoveEnd?.Invoke(this);
+            onMoveEnd?.Invoke();
+            // yield return awaitOnMoveEnd(this);
         }
     }
 }
