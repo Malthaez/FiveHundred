@@ -119,7 +119,7 @@ namespace MatchingGame.Mediators
             foreach (var card in cards)
             {
                 card.OnFlipEnd = null;
-                yield return card.Flip(180f, 0.25f, 0.1f);
+                yield return card.FlipUp(0.25f, 0.1f);
                 card.OnFlipEnd = ResolveSelect;
             }
         }

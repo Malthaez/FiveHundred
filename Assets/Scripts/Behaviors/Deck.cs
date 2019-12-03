@@ -20,8 +20,9 @@ namespace MatchingGame.Behaviors
             card.transform.parent = transform;
         }
 
-        public void Shuffle()
+        public IEnumerator Shuffle()
         {
+            List<Coroutine> coroutines = new List<Coroutine>();
             int n = _cards.Count;
 
             while (n > 1)
@@ -31,6 +32,26 @@ namespace MatchingGame.Behaviors
                 Card value = _cards[k];
                 _cards[k] = _cards[n];
                 _cards[n] = value;
+                coroutines.Add(StartCoroutine(MoveCardInDeck(_cards[k], k)));
+            }
+
+            yield return AwaitAllCoroutines(coroutines);
+        }
+
+        public IEnumerator MoveCardInDeck(Card card, int newIndex)
+        {
+            int direction = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
+
+            var movements = new[]
+            {
+                new Vector3(0.00f, 1.00f * direction, 0.00f), // Out
+                new Vector3(0.00f, 1.00f * direction, 0.15f * newIndex), // Up-Down
+                new Vector3(0.00f, 0.00f, 0.15f * newIndex) // In
+            };
+
+            foreach(var movement in movements)
+            {
+                yield return card.MoveTo(transform.position + movement, 10.0f, null);
             }
         }
 
@@ -40,9 +61,7 @@ namespace MatchingGame.Behaviors
 
             foreach (var card in cards)
             {
-                card.OnMoveEnd = (Card _card) => card.transform.parent = transform;
-                coroutines.Add(StartCoroutine(card.MoveTo(transform.position, 60.0f)));
-                card.OnMoveEnd = null;
+                coroutines.Add(StartCoroutine(card.MoveTo(transform.position, 60.0f, () => { card.transform.parent = transform; if (card.Flipped || card.Flipping) { card.FlipDown(); } })));
             }
 
             return coroutines;
