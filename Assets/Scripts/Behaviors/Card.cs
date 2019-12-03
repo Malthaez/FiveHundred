@@ -12,11 +12,12 @@ namespace MatchingGame.Behaviors
         [SerializeField] private CardSuitsEnum _cardSuit;
         [SerializeField] private int _value;
         [SerializeField] private Image _cardArt;
+        [SerializeField] private Image _cardBack;
 
         public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
         public int Value { get => _value; set => _value = value; }
         public Sprite Art { get => _cardArt.sprite; set => _cardArt.sprite = value; }
-
+        public Sprite Back { get => _cardBack.sprite; set => _cardBack.sprite = value; }
 
         //========
 
@@ -48,7 +49,6 @@ namespace MatchingGame.Behaviors
 
         private void OnMouseOver() => GetMouseInput();
 
-
         public Coroutine FlipDown(float duration, float pause)
         {
             if (_flipCoroutine != null) { StopCoroutine(_flipCoroutine); }
@@ -74,7 +74,6 @@ namespace MatchingGame.Behaviors
         private IEnumerator IFlip(float rotation, float duration, float pause)
         {
             OnFlipStart?.Invoke(this);
-            // var rotation = (_flipped ? 0 : 180f) - transform.eulerAngles.y;
 
             if (rotation != 0)
             {
@@ -112,23 +111,25 @@ namespace MatchingGame.Behaviors
 
         public IEnumerator MoveTo(Vector3 destinationPosition, float speed, Action onMoveEnd)
         {
-            _moving = true;
-
             var startTime = Time.time;
             var startPosition = transform.position;
             var endPosition = destinationPosition;
             var totalDistance = Vector3.Distance(startPosition, endPosition);
+            var t = 0f;
 
-            while (true)
+            _moving = true;
+
+            if (totalDistance != 0)
             {
-                var elapsedDistance = (Time.time - startTime) * speed;
-                var t = Mathf.Clamp(elapsedDistance / totalDistance, 0f, 1.0f);
+                while (t < 1.0f)
+                {
+                    var elapsedDistance = (Time.time - startTime) * speed;
+                    t = Mathf.Clamp(elapsedDistance / totalDistance, 0f, 1.0f);
 
-                transform.position = Vector3.Lerp(startPosition, endPosition, t);
+                    transform.position = Vector3.Lerp(startPosition, endPosition, t);
 
-                if (t >= 1.0f) { break; }
-
-                yield return null;
+                    yield return null;
+                }
             }
 
             _moving = false;
