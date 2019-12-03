@@ -25,7 +25,7 @@ namespace MatchingGame.Behaviors.Layout
             => new Vector3
             {
                 x = 4.5f * coordinates[0],
-                y = 4.5f * coordinates[1]
+                y = 3.5f * coordinates[1]
             };
     }
 }
