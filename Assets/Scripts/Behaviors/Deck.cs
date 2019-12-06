@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MatchingGame.Enums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace MatchingGame.Behaviors
     public class Deck : MonoBehaviour
     {
         [SerializeField] private List<Card> _cards;
+        [SerializeField] private List<Card> _removedCards;
         [SerializeField] private int _drawIndex;
 
         public List<Card> Cards { get => _cards; private set => _cards = value; }
@@ -19,6 +21,37 @@ namespace MatchingGame.Behaviors
             _cards.Add(card);
             card.transform.parent = transform;
         }
+
+        public void RemoveCard(Card card)
+        {
+            _cards.Remove(card);
+            card.gameObject.SetActive(false);
+            _removedCards.Add(card);
+        }
+
+        public void RemoveCards(IEnumerable<Card> cards)
+        {
+            foreach (var card in cards)
+            {
+                RemoveCard(card);
+            }
+        }
+
+        public void RemoveCards(IEnumerable<CardValuesEnum> cardValues)
+        {
+            var cards = new List<Card>();
+
+            foreach (var card in _cards)
+            {
+                if (card.Value == (int)CardValuesEnum.Two || card.Value == (int)CardValuesEnum.Three)
+                {
+                    cards.Add(card);
+                }
+            }
+
+            RemoveCards(cards);
+        }
+
 
         public IEnumerator Shuffle()
         {
@@ -49,7 +82,7 @@ namespace MatchingGame.Behaviors
                 new Vector3(0.00f, 0.00f, 0.15f * newIndex) // In
             };
 
-            foreach(var movement in movements)
+            foreach (var movement in movements)
             {
                 yield return card.MoveTo(transform.position + movement, 10.0f, null);
             }

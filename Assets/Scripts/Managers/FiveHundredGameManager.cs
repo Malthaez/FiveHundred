@@ -1,4 +1,5 @@
 ﻿using MatchingGame.Behaviors;
+using MatchingGame.Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace MatchingGame.Managers
         public IEnumerator StartFiveHundredGame(List<Player> players, Deck deck)
         {
             Player dealer = null;
+            deck.RemoveCards(new[] { CardValuesEnum.Two, CardValuesEnum.Three });
 
             yield return deck.Shuffle();
             yield return players[0].Deal(players, deck, (Player player, Card card) => dealer = Rules.CheckForJack(card) ? player : dealer, () => dealer == null);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MatchingGame.Behaviors.Layout.Factories
 {
-    public class SeatPositionFactory
+    public static class SeatPositionFactory
     {
         private static Dictionary<SeatPositionEnum, int[]> seatPositions = new Dictionary<SeatPositionEnum, int[]>
         {
