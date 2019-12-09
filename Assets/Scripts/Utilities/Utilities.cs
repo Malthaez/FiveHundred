@@ -22,7 +22,7 @@ namespace MatchingGame.Utilities
             return coroutines;
         }
 
-        public static IEnumerator AwaitAllCoroutines(IEnumerable<Coroutine> coroutines)
+        public static IEnumerator AwaitAllCoroutines(this MonoBehaviour gameObject, IEnumerable<Coroutine> coroutines)
         {
             foreach (var coroutine in coroutines)
             {
@@ -30,7 +30,7 @@ namespace MatchingGame.Utilities
             }
         }
 
-        public static IEnumerator AwaitAllGameActions<T>(IEnumerable<GameAction<T>> gameActions, T val)
+        public static IEnumerator AwaitAllGameActions<T>(this MonoBehaviour gameObject, IEnumerable<GameAction<T>> gameActions, T val)
         {
             if (gameActions != null)
             {
@@ -41,7 +41,7 @@ namespace MatchingGame.Utilities
             }
         }
 
-        public static IEnumerator AwaitAllGameActions<T1, T2>(IEnumerable<GameAction<T1, T2>> gameActions, T1 val1, T2 val2)
+        public static IEnumerator AwaitAllGameActions<T1, T2>(this MonoBehaviour gameObject, IEnumerable<GameAction<T1, T2>> gameActions, T1 val1, T2 val2)
         {
             if (gameActions != null)
             {
@@ -52,7 +52,7 @@ namespace MatchingGame.Utilities
             }
         }
 
-        public static IEnumerator AwaitAllGameActions<T1, T2, T3>(IEnumerable<GameAction<T1, T2, T3>> gameActions, T1 val1, T2 val2, T3 val3)
+        public static IEnumerator AwaitAllGameActions<T1, T2, T3>(this MonoBehaviour gameObject, IEnumerable<GameAction<T1, T2, T3>> gameActions, T1 val1, T2 val2, T3 val3)
         {
             if (gameActions != null)
             {
@@ -62,5 +62,7 @@ namespace MatchingGame.Utilities
                 }
             }
         }
+
+        public static 
     }
 }

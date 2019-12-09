@@ -1,45 +1,40 @@
 ﻿using MatchingGame.Enums;
+using MatchingGame.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MatchingGame.Utilities.CoroutineUtilities;
 
 namespace MatchingGame.Behaviors
 {
-    public class Player : MonoBehaviour
+    public class Player : Dealable
     {
         [SerializeField] private SeatPositionEnum _seat;
-        [SerializeField] private List<Card> _hand;
 
         public SeatPositionEnum Seat { get => _seat; set => _seat = value; }
-        public List<Card> Hand => _hand;
 
         public IEnumerator AddToHand(Card card)
         {
-            _hand.Add(card);
+            Cards.Add(card);
 
-            var startPosition = transform.position + new Vector3((_hand.Count / 2f) * 0.25f, 0f, 0f);
+            var startPosition = transform.position + new Vector3((Cards.Count / 2f) * 0.25f, 0f, 0f);
 
-            yield return card.MoveTo(GetNextCardPosition(_hand.Count - 1, startPosition), 45.0f, () => { if (_seat == SeatPositionEnum.Bottom) { card.FlipUp(); }; StartCoroutine(ArrangeHand(startPosition)); });
+            yield return card.MoveTo(GetNextCardPosition(Cards.Count - 1, startPosition), 45.0f, () => { if (_seat == SeatPositionEnum.Bottom) { card.FlipUp(); }; StartCoroutine(ArrangeHand(startPosition)); });
             card.transform.SetParent(transform);
         }
 
-        public void DiscardHand()
-        {
-            _hand.Clear();
-        }
+        public void DiscardHand() => DiscardCards();
 
         public IEnumerator ArrangeHand(Vector3 startPosition)
         {
             var coroutines = new List<Coroutine>();
 
-            for (int i = 0; i < _hand.Count; i++)
+            for (int i = 0; i < Cards.Count; i++)
             {
-                coroutines.Add(StartCoroutine(_hand[i].MoveTo(GetNextCardPosition(i, startPosition), 40f, null)));
+                coroutines.Add(StartCoroutine(Cards[i].MoveTo(GetNextCardPosition(i, startPosition), 40f, null)));
             }
 
-            yield return AwaitAllCoroutines(coroutines);
+            yield return this.AwaitAllCoroutines(coroutines);
         }
 
         public Vector3 GetNextCardPosition(int positionInHand, Vector3 startPosition) => startPosition + (new Vector3(-0.25f, 0f, 0.15f) * positionInHand);

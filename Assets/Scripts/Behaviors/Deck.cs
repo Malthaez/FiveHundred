@@ -1,9 +1,9 @@
 ﻿using MatchingGame.Enums;
+using MatchingGame.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MatchingGame.Utilities.CoroutineUtilities;
 
 namespace MatchingGame.Behaviors
 {
@@ -68,7 +68,7 @@ namespace MatchingGame.Behaviors
                 coroutines.Add(StartCoroutine(MoveCardInDeck(_cards[k], k)));
             }
 
-            yield return AwaitAllCoroutines(coroutines);
+            yield return this.AwaitAllCoroutines(coroutines);
         }
 
         public IEnumerator MoveCardInDeck(Card card, int newIndex)
@@ -102,7 +102,7 @@ namespace MatchingGame.Behaviors
 
         public IEnumerator ReturnCards(IEnumerable<Card> cards)
         {
-            yield return AwaitAllCoroutines(GetReturnCardCoroutines(cards));
+            yield return this.AwaitAllCoroutines(GetReturnCardCoroutines(cards));
             _drawIndex = 0;
         }
 
@@ -122,6 +122,68 @@ namespace MatchingGame.Behaviors
 
             callback(player, card);
             yield return awaitCallback.Invoke(card);
+        }
+
+        // TODO: Possibly don't use these Deal methods, but we'll see.
+
+        public IEnumerator Deal(Dealable dealable, Action<Dealable, Card> onSuccessfulDeal, Func<Card, IEnumerator> awaitOnSuccessfulDeal)
+        {
+            Card card = null;
+            Action<Dealable, Card> callback = null;
+            Func<Card, IEnumerator> awaitCallback = null;
+
+            if (_drawIndex < _cards.Count)
+            {
+                card = _cards[_drawIndex];
+                callback = onSuccessfulDeal;
+                awaitCallback = awaitOnSuccessfulDeal;
+                _drawIndex++;
+            }
+
+            callback(dealable, card);
+            yield return awaitCallback.Invoke(card);
+        }
+
+        public IEnumerator DealRound(IEnumerable<Dealable> dealables, int cardsToDeal, Action<Dealable, Card> onSuccessfulDeal, Func<Card, IEnumerator> awaitOnSuccessfulDeal)
+        {
+            Card card = null;
+            Action<Dealable, Card> callback = null;
+            Func<Card, IEnumerator> awaitCallback = null;
+
+            if (_drawIndex < _cards.Count)
+            {
+                card = _cards[_drawIndex];
+                callback = onSuccessfulDeal;
+                awaitCallback = awaitOnSuccessfulDeal;
+                _drawIndex++;
+            }
+
+            callback(dealable, card);
+            yield return awaitCallback.Invoke(card);
+        }
+
+        public IEnumerator DealFiveHundred(Player dealer, List<Dealable> dealables, Action<Dealable, Card> onSuccessfulDeal, Func<bool> continueDeal)
+        {
+            // Start dealing to the left of the dealer
+            var n = dealables.IndexOf(dealer) + 1;
+            Debug.Log($"Player {n} is dealing");
+
+            // Get deck's card count since we can't alter the deck's contents while looping
+            int count = Cards.Count;
+            int drawCount = 1;
+
+            onSuccessfulDeal += (Dealable dealable, Card card) => { count -= drawCount; };
+
+            while (count > 0 && (continueDeal != null ? continueDeal() : true))
+            {
+                n++;
+                n %= dealables.Count;
+
+                drawCount = 2 + (((n / dealables.Count) + 1) % 2);
+
+                // Debug.Log(count);
+                yield return DealRound(dealables, drawCount, onSuccessfulDeal);
+            }
         }
     }
 }
