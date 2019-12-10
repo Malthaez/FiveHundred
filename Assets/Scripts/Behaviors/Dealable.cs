@@ -5,15 +5,19 @@ using UnityEngine;
 
 namespace MatchingGame.Behaviors
 {
-    public abstract class Dealable : MonoBehaviour
+    public class Dealable : MonoBehaviour
     {
-        [SerializeField] private List<Card> _cards;
+        [SerializeField] private List<Card> _cards = new List<Card>();
 
         public List<Card> Cards { get => _cards; protected set => _cards = value; }
 
-        public void DiscardCards()
+        public void DiscardCards() => _cards.Clear();
+
+        public IEnumerator ReceiveCard(Card card)
         {
-            _cards.Clear();
+            _cards.Add(card);
+            yield return card.MoveTo(this.GetLastCardPosition(), 45.0f);
+            card.transform.SetParent(transform);
         }
 
         public IEnumerator ArrangeCards(Vector3 startPosition)
@@ -22,7 +26,7 @@ namespace MatchingGame.Behaviors
 
             for (int i = 0; i < _cards.Count; i++)
             {
-                coroutines.Add(StartCoroutine(_cards[i].MoveTo(this.GetNextCardPosition(i, startPosition), 40f, null)));
+                coroutines.Add(StartCoroutine(_cards[i].MoveTo(this.GetCardPositionByIndex(i), 40f)));
             }
 
             yield return this.AwaitAllCoroutines(coroutines);

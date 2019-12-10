@@ -34,7 +34,7 @@ namespace MatchingGame.Managers
             _fiveHundredGameManager.Initialize();
 
             // StartMemoryGame(_gameDataSource.CardPairsCount);
-            StartFiveHundredGame(_gameDataSource.Players);
+            StartFiveHundredGame(_gameDataSource.Players, _gameDataSource.Kitty);
         }
 
         //private void StartMemoryGame(int cardPairsCount)
@@ -47,13 +47,14 @@ namespace MatchingGame.Managers
         //    _layoutManager.SetLayout(new CardGridLayout(cards.ToTransforms(), new[] { 0.8f, 1.1f }, 6));
         //}
 
-        private void StartFiveHundredGame(List<Player> players)
+        private void StartFiveHundredGame(List<Player> players, Dealable kitty)
         {
             _layoutManager.SetLayout(new TestLayout(players.ToTransforms()));
 
             var deck = _cardManager.GetPlayingCardDeck();
+            deck.transform.position = new Vector3(-5f, -3f, 0);
 
-            StartCoroutine(_fiveHundredGameManager.StartFiveHundredGame(players, deck));
+            StartCoroutine(_fiveHundredGameManager.StartFiveHundredGame(players, deck, kitty));
         }
     }
 }

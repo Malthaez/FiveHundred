@@ -1,4 +1,5 @@
 ﻿using MatchingGame.Enums;
+using MatchingGame.Factories;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -21,95 +22,96 @@ namespace MatchingGame.Behaviors
 
         //========
 
+        [SerializeField] protected FaceDirection _faceDirection = FaceDirection.Down;
         protected bool _flipping = false;
-        protected bool _flipped = false;
         protected bool _moving = false;
         private Coroutine _flipCoroutine;
 
         public bool Flipping => _flipping;
-        public bool Flipped => _flipped;
+        public FaceDirection FaceDirection => _faceDirection;
 
         public bool Moving { get => _moving; set => _moving = value; }
-        public Coroutine FlipCoroutine { get => _flipCoroutine; set => _flipCoroutine = value; }
-
-        public delegate void OnFlip(Card card);
-        public OnFlip OnFlipStart { get; set; }
-        public OnFlip OnEachFlipFrame { get; set; }
-        public OnFlip OnFlipEnd { get; set; }
 
         private void GetMouseInput()
         {
             /* Mouse Left */
-            if (Input.GetMouseButtonUp(0)) { if (!_flipping && !_flipped) { FlipUp(); } }
+            if (Input.GetMouseButtonUp(0)) { if (!_flipping) { FlipUp(); } }
             /* Mouse Right */
-            if (Input.GetMouseButtonUp(1)) { if (!_flipping && _flipped) { FlipDown(); } }
+            if (Input.GetMouseButtonUp(1)) { if (!_flipping) { FlipDown(); } }
             /* Mouse Middle */
             if (Input.GetMouseButtonUp(2)) { }
         }
 
         private void OnMouseOver() => GetMouseInput();
 
-        public Coroutine FlipDown(float duration, float pause)
+        public Coroutine FlipDown(float duration)
         {
-            if (_flipCoroutine != null) { StopCoroutine(_flipCoroutine); }
-            _flipCoroutine = StartCoroutine(IFlip(-180f, duration, pause));
+            if(_flipping && _flipCoroutine != null)
+            {
+                StopCoroutine(_flipCoroutine);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Up).z);
+
+                _faceDirection = FaceDirection.Up;
+                _flipping = false;
+                _flipCoroutine = null;
+            }
+            _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Down, duration));
             return _flipCoroutine;
         }
-
-        public Coroutine FlipDown(float duration) => FlipDown(duration, 0.1f);
 
         public Coroutine FlipDown() => FlipDown(0.1f);
 
-        public Coroutine FlipUp(float duration, float pause)
+        public Coroutine FlipUp(float duration)
         {
-            if (_flipCoroutine != null) { StopCoroutine(_flipCoroutine); }
-            _flipCoroutine = StartCoroutine(IFlip(180f, duration, pause));
+            if (_flipping && _flipCoroutine != null)
+            {
+                StopCoroutine(_flipCoroutine);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Down).z);
+
+                _faceDirection = FaceDirection.Down;
+                _flipping = false;
+                _flipCoroutine = null;
+            }
+            _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Up, duration));
             return _flipCoroutine;
         }
 
-        public Coroutine FlipUp(float duration) => FlipUp(duration, 0.1f);
-
         public Coroutine FlipUp() => FlipUp(0.1f);
 
-        private IEnumerator IFlip(float rotation, float duration, float pause)
+        private IEnumerator IFlip(FaceDirection flipDirection, float duration)
         {
-            OnFlipStart?.Invoke(this);
+            if (_faceDirection == flipDirection) { yield break; }
 
-            if (rotation != 0)
+            var rotation = flipDirection == FaceDirection.Up ? 180f : -180f;
+            var totalDuration = duration * Math.Abs(rotation / 180f);
+            var t = 0f;
+            _flipping = true;
+
+            while (_flipping)
             {
-                var totalDuration = duration * Math.Abs(rotation / 180f);
-                var t = 0f;
-                _flipping = true;
+                var incrementalRotation = (rotation / totalDuration) * Time.deltaTime;
 
-                while (true)
+                if (Math.Abs(t + incrementalRotation) > Math.Abs(rotation))
                 {
-                    OnEachFlipFrame?.Invoke(this);
-
-                    float incrementalRotation = (rotation / totalDuration) * Time.deltaTime;
-
-                    if (Math.Abs(t + incrementalRotation) > Math.Abs(rotation))
-                    {
-                        transform.Rotate(new Vector3 { z = rotation - t });
-                        break;
-                    }
-                    else
-                    {
-                        t += incrementalRotation;
-                        transform.Rotate(new Vector3 { z = incrementalRotation });
-                        yield return null;
-                    }
+                    transform.Rotate(new Vector3 { z = rotation - t });
+                    break;
                 }
-
-                yield return new WaitForSeconds(pause);
-
-                _flipped = !_flipped;
-                _flipping = false;
+                else
+                {
+                    t += incrementalRotation;
+                    transform.Rotate(new Vector3 { z = incrementalRotation });
+                    yield return null;
+                }
             }
 
-            OnFlipEnd?.Invoke(this);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(flipDirection).z);
+
+            _faceDirection = flipDirection;
+            _flipping = false;
+            _flipCoroutine = null;
         }
 
-        public IEnumerator MoveTo(Vector3 destinationPosition, float speed, Action onMoveEnd)
+        public IEnumerator MoveTo(Vector3 destinationPosition, float speed)
         {
             var startTime = Time.time;
             var startPosition = transform.position;
@@ -133,9 +135,6 @@ namespace MatchingGame.Behaviors
             }
 
             _moving = false;
-
-            onMoveEnd?.Invoke();
-            // yield return awaitOnMoveEnd(this);
         }
     }
 }

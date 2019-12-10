@@ -62,7 +62,5 @@ namespace MatchingGame.Utilities
                 }
             }
         }
-
-        public static 
     }
 }

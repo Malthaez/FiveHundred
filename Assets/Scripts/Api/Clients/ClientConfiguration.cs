@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.Api.Clients
+namespace MatchingGame.Api.Clients
 {
     public class ClientConfiguration
     {
