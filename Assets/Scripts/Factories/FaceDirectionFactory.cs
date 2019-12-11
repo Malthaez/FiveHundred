@@ -8,7 +8,7 @@ namespace MatchingGame.Factories
     {
         private static readonly Dictionary<FaceDirection, Vector3> _baseScores = new Dictionary<FaceDirection, Vector3>()
         {
-            { FaceDirection.Up, new Vector3(0f, 0f, 180f) },
+            { FaceDirection.Up, new Vector3(0f, 180f, 0f) },
             { FaceDirection.Down, new Vector3(0f, 0f, 0f) },
         };
 

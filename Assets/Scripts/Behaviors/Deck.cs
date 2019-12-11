@@ -1,8 +1,8 @@
 ﻿using MatchingGame.Enums;
 using MatchingGame.Utilities;
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MatchingGame.Behaviors
@@ -37,20 +37,7 @@ namespace MatchingGame.Behaviors
             }
         }
 
-        public void RemoveCards(IEnumerable<CardValuesEnum> cardValues)
-        {
-            var cards = new List<Card>();
-
-            foreach (var card in _cards)
-            {
-                if (card.Value == (int)CardValuesEnum.Two || card.Value == (int)CardValuesEnum.Three)
-                {
-                    cards.Add(card);
-                }
-            }
-
-            RemoveCards(cards);
-        }
+        public void RemoveCardsByValues(IEnumerable<CardValuesEnum> cardValues) => RemoveCards(_cards.Where(card => cardValues.Any(value => card.Value == (int)value)).ToList());
 
         public IEnumerator Shuffle()
         {
@@ -95,7 +82,7 @@ namespace MatchingGame.Behaviors
             {
                 coroutines.Add(StartCoroutine(card.MoveTo(transform.position, 60.0f)));
                 card.transform.parent = transform;
-                card.FlipDown();
+                StartCoroutine(card.Flip(FaceDirection.Down, 0.1f));
             }
 
             return coroutines;

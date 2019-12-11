@@ -35,50 +35,50 @@ namespace MatchingGame.Behaviors
         private void GetMouseInput()
         {
             /* Mouse Left */
-            if (Input.GetMouseButtonUp(0)) { if (!_flipping) { FlipUp(); } }
+            if (Input.GetMouseButtonUp(0)) { if (!_flipping) { StartCoroutine(Flip(FaceDirection.Up, 0.1f)); } }
             /* Mouse Right */
-            if (Input.GetMouseButtonUp(1)) { if (!_flipping) { FlipDown(); } }
+            if (Input.GetMouseButtonUp(1)) { if (!_flipping) { StartCoroutine(Flip(FaceDirection.Down, 0.1f)); } }
             /* Mouse Middle */
             if (Input.GetMouseButtonUp(2)) { }
         }
 
         private void OnMouseOver() => GetMouseInput();
 
-        public Coroutine FlipDown(float duration)
-        {
-            if(_flipping && _flipCoroutine != null)
-            {
-                StopCoroutine(_flipCoroutine);
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Up).z);
+        //public Coroutine FlipDown(float duration)
+        //{
+        //    if(_flipping && _flipCoroutine != null)
+        //    {
+        //        StopCoroutine(_flipCoroutine);
+        //        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Up).z);
 
-                _faceDirection = FaceDirection.Up;
-                _flipping = false;
-                _flipCoroutine = null;
-            }
-            _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Down, duration));
-            return _flipCoroutine;
-        }
+        //        _faceDirection = FaceDirection.Up;
+        //        _flipping = false;
+        //        _flipCoroutine = null;
+        //    }
+        //    _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Down, duration));
+        //    return _flipCoroutine;
+        //}
 
-        public Coroutine FlipDown() => FlipDown(0.1f);
+        //public Coroutine FlipDown() => FlipDown(0.1f);
 
-        public Coroutine FlipUp(float duration)
-        {
-            if (_flipping && _flipCoroutine != null)
-            {
-                StopCoroutine(_flipCoroutine);
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Down).z);
+        //public Coroutine FlipUp(float duration)
+        //{
+        //    if (_flipping && _flipCoroutine != null)
+        //    {
+        //        StopCoroutine(_flipCoroutine);
+        //        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Down).z);
 
-                _faceDirection = FaceDirection.Down;
-                _flipping = false;
-                _flipCoroutine = null;
-            }
-            _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Up, duration));
-            return _flipCoroutine;
-        }
+        //        _faceDirection = FaceDirection.Down;
+        //        _flipping = false;
+        //        _flipCoroutine = null;
+        //    }
+        //    _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Up, duration));
+        //    return _flipCoroutine;
+        //}
 
-        public Coroutine FlipUp() => FlipUp(0.1f);
+        //public Coroutine FlipUp() => FlipUp(0.1f);
 
-        private IEnumerator IFlip(FaceDirection flipDirection, float duration)
+        public IEnumerator Flip(FaceDirection flipDirection, float duration)
         {
             if (_faceDirection == flipDirection) { yield break; }
 
@@ -86,7 +86,6 @@ namespace MatchingGame.Behaviors
             var totalDuration = duration * Math.Abs(rotation / 180f);
             var t = 0f;
             _flipping = true;
-
             while (_flipping)
             {
                 var incrementalRotation = (rotation / totalDuration) * Time.deltaTime;
@@ -103,12 +102,10 @@ namespace MatchingGame.Behaviors
                     yield return null;
                 }
             }
-
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(flipDirection).z);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, FaceDirectionFactory.GetFaceDirectionRotation(flipDirection).y, transform.eulerAngles.z);
 
             _faceDirection = flipDirection;
             _flipping = false;
-            _flipCoroutine = null;
         }
 
         public IEnumerator MoveTo(Vector3 destinationPosition, float speed)

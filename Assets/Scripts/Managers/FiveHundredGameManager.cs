@@ -36,7 +36,7 @@ namespace MatchingGame.Managers
             {
                 dealables.Add(player);
             }
-            deck.RemoveCards(new[] { CardValuesEnum.Two, CardValuesEnum.Three });
+            deck.RemoveCardsByValues(new[] { CardValuesEnum.Two, CardValuesEnum.Three, CardValuesEnum.Ace, CardValuesEnum.King });
 
             Action<Dealable, Card> dealCallback = null;
             dealCallback += (Dealable dealable, Card card) => dealer = Rules.CheckForJack(card) ? dealable as Player : dealer;
@@ -44,7 +44,7 @@ namespace MatchingGame.Managers
             {
                 if (dealable as Player != null && ((Player)dealable).Seat == SeatPositionEnum.Bottom)
                 {
-                    card.FlipUp();
+                    StartCoroutine(card.Flip(FaceDirection.Up, 0.1f));
                 };
                 StartCoroutine(dealable.ArrangeCards(dealable.transform.position + new Vector3((dealable.Cards.Count / 2f) * 0.25f, 0f, 0f)));
             };
@@ -61,7 +61,7 @@ namespace MatchingGame.Managers
             {
                 if (dealable as Player != null && ((Player)dealable).Seat == SeatPositionEnum.Bottom)
                 {
-                    card.FlipUp();
+                    StartCoroutine(card.Flip(FaceDirection.Up, 0.1f));
                 };
                 StartCoroutine(dealable.ArrangeCards(dealable.transform.position + new Vector3((dealable.Cards.Count / 2f) * 0.25f, 0f, 0f)));
             };
