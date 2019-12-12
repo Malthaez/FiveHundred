@@ -245,6 +245,8 @@ MonoBehaviour:
   - {fileID: 21300098, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
   - {fileID: 21300100, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
   - {fileID: 21300102, guid: 64a7e3ca82ea6bb4c911d2a00bca7fd9, type: 3}
+  _jokerArtImages:
+  - {fileID: 21300000, guid: a892aa0b9aea3ea4099b528a7a6865ee, type: 3}
 --- !u!4 &106140320
 Transform:
   m_ObjectHideFlags: 0
