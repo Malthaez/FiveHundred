@@ -3,6 +3,7 @@ using MatchingGame.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MatchingGame.Managers
@@ -31,12 +32,8 @@ namespace MatchingGame.Managers
         public IEnumerator StartFiveHundredGame(List<Player> players, Deck deck, Dealable kitty)
         {
             Player dealer = null;
-            var dealables = new List<Dealable>();
-            foreach (var player in players)
-            {
-                dealables.Add(player);
-            }
-            deck.RemoveCardsByValues(new[] { CardValuesEnum.Two, CardValuesEnum.Three, CardValuesEnum.Ace, CardValuesEnum.King });
+            var dealables = players.Cast<Dealable>().ToList();
+            deck.RemoveCardsByValues(new[] { CardValuesEnum.Two, CardValuesEnum.Three });
 
             Action<Dealable, Card> dealCallback = null;
             dealCallback += (Dealable dealable, Card card) => dealer = Rules.CheckForJack(card) ? dealable as Player : dealer;
@@ -50,7 +47,7 @@ namespace MatchingGame.Managers
             };
 
             yield return deck.Shuffle();
-            yield return players[0].Deal(dealables, deck, 1, dealCallback, () => dealer == null);
+            yield return players[0].Deal(dealables, deck, 1, dealCallback, () => dealer == null, (Dealable dealable) => dealable.name == "Kitty");
             Debug.Log(dealer);
             yield return ReturnCardsToDeck(dealables, deck);
             yield return deck.Shuffle();
@@ -66,7 +63,7 @@ namespace MatchingGame.Managers
                 StartCoroutine(dealable.ArrangeCards(dealable.transform.position + new Vector3((dealable.Cards.Count / 2f) * 0.25f, 0f, 0f)));
             };
 
-            yield return dealer.Deal(dealables, deck, 3, dealCallback, null);
+            yield return dealer.Deal(dealables, deck, new[] { 3, 2 }, dealCallback, null, (Dealable dealable) => dealable.name == "Kitty" && dealable.Cards.Count >= 5);
             Debug.Log("Done!");
         }
     }

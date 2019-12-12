@@ -25,11 +25,9 @@ namespace MatchingGame.Behaviors
         [SerializeField] protected FaceDirection _faceDirection = FaceDirection.Down;
         protected bool _flipping = false;
         protected bool _moving = false;
-        private Coroutine _flipCoroutine;
 
-        public bool Flipping => _flipping;
         public FaceDirection FaceDirection => _faceDirection;
-
+        public bool Flipping => _flipping;
         public bool Moving { get => _moving; set => _moving = value; }
 
         private void GetMouseInput()
@@ -43,40 +41,6 @@ namespace MatchingGame.Behaviors
         }
 
         private void OnMouseOver() => GetMouseInput();
-
-        //public Coroutine FlipDown(float duration)
-        //{
-        //    if(_flipping && _flipCoroutine != null)
-        //    {
-        //        StopCoroutine(_flipCoroutine);
-        //        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Up).z);
-
-        //        _faceDirection = FaceDirection.Up;
-        //        _flipping = false;
-        //        _flipCoroutine = null;
-        //    }
-        //    _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Down, duration));
-        //    return _flipCoroutine;
-        //}
-
-        //public Coroutine FlipDown() => FlipDown(0.1f);
-
-        //public Coroutine FlipUp(float duration)
-        //{
-        //    if (_flipping && _flipCoroutine != null)
-        //    {
-        //        StopCoroutine(_flipCoroutine);
-        //        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, FaceDirectionFactory.GetFaceDirectionRotation(FaceDirection.Down).z);
-
-        //        _faceDirection = FaceDirection.Down;
-        //        _flipping = false;
-        //        _flipCoroutine = null;
-        //    }
-        //    _flipCoroutine = StartCoroutine(IFlip(FaceDirection.Up, duration));
-        //    return _flipCoroutine;
-        //}
-
-        //public Coroutine FlipUp() => FlipUp(0.1f);
 
         public IEnumerator Flip(FaceDirection flipDirection, float duration)
         {
