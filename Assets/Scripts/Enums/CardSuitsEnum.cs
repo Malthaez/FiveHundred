@@ -12,6 +12,7 @@
         Triangle,
         Star,
         NoTrump,
+        Joker,
         MAX
     }
 }

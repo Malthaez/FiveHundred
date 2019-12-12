@@ -34,6 +34,7 @@ namespace MatchingGame.Managers
             Player dealer = null;
             var dealables = players.Cast<Dealable>().ToList();
             deck.RemoveCardsByValues(new[] { CardValuesEnum.Two, CardValuesEnum.Three });
+            deck.RemoveCard(deck.Cards.First(card => (CardValuesEnum)card.Value == CardValuesEnum.Joker));
 
             Action<Dealable, Card> dealCallback = null;
             dealCallback += (Dealable dealable, Card card) => dealer = Rules.CheckForJack(card) ? dealable as Player : dealer;

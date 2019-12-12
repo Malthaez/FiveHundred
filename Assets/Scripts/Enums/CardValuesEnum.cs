@@ -16,6 +16,7 @@
         Jack,
         Queen,
         King,
+        Joker,
         MAX
     }
 }
