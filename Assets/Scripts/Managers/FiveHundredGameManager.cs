@@ -1,5 +1,6 @@
 ﻿using MatchingGame.Behaviors;
 using MatchingGame.Enums;
+using MatchingGame.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,8 +65,28 @@ namespace MatchingGame.Managers
                 StartCoroutine(dealable.ArrangeCards(dealable.transform.position + new Vector3((dealable.Cards.Count / 2f) * 0.25f, 0f, 0f)));
             };
 
-            yield return dealer.Deal(dealables, deck, new[] { 3, 2 }, dealCallback, null, (Dealable dealable) => dealable.name == "Kitty" && dealable.Cards.Count >= 5);
+            yield return dealer.Deal(GetDealables(dealables, dealer), deck, new[] { 3, 2 }, dealCallback, null, (Dealable dealable) => dealable.name == "Kitty" && dealable.Cards.Count >= 5);
             Debug.Log("Done!");
+        }
+
+        private List<Dealable> GetDealables(List<Dealable> dealTargets, IDealer dealer)
+        {
+            // Figure out which target is the Kitty
+            var kitty = dealTargets.Where(targets => targets.name == "Kitty");
+
+            // Create new list excluding Kitty for now because Kitty gets dealt to last
+            var newList = dealTargets.Except(kitty).ToList();
+
+            // Start dealing to the Player to the left of the dealer
+            var dealOffset = newList.IndexOf(dealer as Player) + 1;
+            dealOffset = dealOffset < newList.Count ? dealOffset : 0;
+
+            // Build final list starting from first deal target
+            var finalList = newList.GetRange(dealOffset, newList.Count - dealOffset);
+            finalList.AddRange(newList.GetRange(0, dealOffset));
+            finalList.AddRange(kitty);
+
+            return finalList;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MatchingGame.Enums;
+using MatchingGame.Interfaces;
 using MatchingGame.Utilities;
 using System;
 using System.Collections;
@@ -7,7 +8,10 @@ using UnityEngine;
 
 namespace MatchingGame.Behaviors
 {
-    public class Player : Dealable
+    /// <summary>
+    /// A Dealable that can take actions in a game
+    /// </summary>
+    public class Player : Dealable, IDealer
     {
         [SerializeField] private SeatPositionEnum _seat;
 
