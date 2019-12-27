@@ -116,15 +116,18 @@ namespace MatchingGame.Behaviors
             _rotating = false;
         }
 
-        public List<Coroutine> DoCardStuff(Vector3 destPosition, Quaternion destRotation, float speed)
+        public List<Coroutine> DoCardStuff(Vector3 destPosition, Quaternion destRotation, float speed, bool revealCard)
         {
             var coroutines = new List<Coroutine>();
             var duration = Vector3.Distance(transform.position, destPosition) / speed;
 
             coroutines.Add(StartCoroutine(MoveTo(destPosition, speed)));
             coroutines.Add(StartCoroutine(RotateTo(destRotation, duration)));
+            coroutines.Add(StartCoroutine(Flip(revealCard ? FaceDirection.Up : FaceDirection.Down, duration)));
 
             return coroutines;
         }
+
+        public List<Coroutine> DoCardStuff(Vector3 destPosition, Quaternion destRotation, float speed) => DoCardStuff(destPosition, destRotation, speed, false);
     }
 }

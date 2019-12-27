@@ -11,6 +11,7 @@ namespace MatchingGame.Behaviors
     public class Dealable : MonoBehaviour
     {
         [SerializeField] private List<Card> _cards = new List<Card>();
+        [SerializeField] private bool _revealCards = false;
 
         public List<Card> Cards { get => _cards; protected set => _cards = value; }
 
@@ -20,7 +21,7 @@ namespace MatchingGame.Behaviors
         {
             _cards.Add(card);
 
-            yield return this.AwaitAllCoroutines(card.DoCardStuff(this.GetLastCardPosition(), transform.rotation, 45.0f));
+            yield return this.AwaitAllCoroutines(card.DoCardStuff(this.GetLastCardPosition(), transform.rotation, 45.0f, _revealCards));
 
             card.transform.SetParent(transform);
         }
@@ -31,7 +32,7 @@ namespace MatchingGame.Behaviors
 
             for (int i = 0; i < _cards.Count; i++)
             {
-                coroutines.AddRange(_cards[i].DoCardStuff(this.GetCardPositionByIndex(i), transform.rotation, 45.0f));
+                coroutines.AddRange(_cards[i].DoCardStuff(this.GetCardPositionByIndex(i), transform.rotation, 45.0f, _revealCards));
             }
 
             yield return this.AwaitAllCoroutines(coroutines);

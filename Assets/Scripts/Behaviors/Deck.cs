@@ -82,7 +82,7 @@ namespace MatchingGame.Behaviors
             foreach (var card in cards)
             {
                 coroutines.AddRange(card.DoCardStuff(transform.position, transform.rotation, 60.0f));
-                coroutines.Add(StartCoroutine(card.Flip(FaceDirection.Down, 0.1f)));
+                //coroutines.Add(StartCoroutine(card.Flip(FaceDirection.Down, 0.1f)));
                 card.transform.parent = transform;
             }
 
