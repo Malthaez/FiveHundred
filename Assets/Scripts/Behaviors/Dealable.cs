@@ -18,29 +18,20 @@ namespace MatchingGame.Behaviors
 
         public IEnumerator ReceiveCard(Card card)
         {
-            var coroutines = new List<Coroutine>();
-            var cardMoveSpeed = 45.0f;
-
             _cards.Add(card);
 
-            var lastCardPosition = this.GetLastCardPosition();
-            var duration = Vector3.Distance(card.transform.position, lastCardPosition) / cardMoveSpeed;
-
-            coroutines.Add(StartCoroutine(card.MoveTo(lastCardPosition, cardMoveSpeed)));
-            coroutines.Add(StartCoroutine(card.RotateTo(transform.rotation.eulerAngles.z, duration)));
-
-            yield return this.AwaitAllCoroutines(coroutines);
+            yield return this.AwaitAllCoroutines(card.DoCardStuff(this.GetLastCardPosition(), transform.rotation, 45.0f));
 
             card.transform.SetParent(transform);
         }
 
-        public IEnumerator ArrangeCards(Vector3 startPosition)
+        public IEnumerator ArrangeCards()
         {
             var coroutines = new List<Coroutine>();
 
             for (int i = 0; i < _cards.Count; i++)
             {
-                coroutines.Add(StartCoroutine(_cards[i].MoveTo(this.GetCardPositionByIndex(i), 40f)));
+                coroutines.AddRange(_cards[i].DoCardStuff(this.GetCardPositionByIndex(i), transform.rotation, 45.0f));
             }
 
             yield return this.AwaitAllCoroutines(coroutines);

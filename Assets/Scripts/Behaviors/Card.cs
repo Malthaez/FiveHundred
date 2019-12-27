@@ -1,6 +1,7 @@
 ﻿using MatchingGame.Enums;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +13,13 @@ namespace MatchingGame.Behaviors
         [SerializeField] private int _value;
         [SerializeField] private Image _cardArt;
         [SerializeField] private Image _cardBack;
+        [SerializeField] private Vector3 _eulerRotation;
 
         public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
         public int Value { get => _value; set => _value = value; }
         public Sprite Art { get => _cardArt.sprite; set => _cardArt.sprite = value; }
         public Sprite Back { get => _cardBack.sprite; set => _cardBack.sprite = value; }
+        public Vector3 EulerRotation { get => _eulerRotation; set => _eulerRotation = value; }
 
         //========
 
@@ -28,9 +31,10 @@ namespace MatchingGame.Behaviors
         public bool Moving { get => _moving; set => _moving = value; }
         public bool Rotating => _rotating;
 
+
         public IEnumerator Flip(FaceDirection flipDirection, float duration) => GetComponentInChildren<CardAvatar>().Flip(flipDirection, duration);
 
-        public IEnumerator MoveTo(Vector3 destinationPosition, float speed)
+        private IEnumerator MoveTo(Vector3 destinationPosition, float speed)
         {
             var startTime = Time.time;
             var startPosition = transform.position;
@@ -56,35 +60,71 @@ namespace MatchingGame.Behaviors
             _moving = false;
         }
 
-        public IEnumerator RotateTo(float finalRotation, float duration)
+        //public IEnumerator RotateTo(float finalRotation, float duration)
+        //{
+        //    var initialRotation = transform.rotation.eulerAngles.z;
+
+        //    if (initialRotation == finalRotation) { yield break; }
+
+        //    var rotation = finalRotation - initialRotation;
+        //    var t = 0f;
+
+        //    _rotating = true;
+
+        //    while (_rotating)
+        //    {
+        //        var incrementalRotation = (rotation / duration) * Time.deltaTime;
+
+        //        if (Math.Abs(t + incrementalRotation) > Math.Abs(rotation))
+        //        {
+        //            transform.Rotate(new Vector3 { y = rotation - t });
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            t += incrementalRotation;
+        //            transform.Rotate(new Vector3 { y = incrementalRotation });
+        //            yield return null;
+        //        }
+        //    }
+
+        //    _rotating = false;
+        //}
+
+        private IEnumerator RotateTo(Quaternion finalRotation, float duration)
         {
-            var initialRotation = transform.rotation.eulerAngles.z;
+            var finalEulers = finalRotation.eulerAngles;
 
-            if (initialRotation == finalRotation) { yield break; }
-
-            var rotation = finalRotation - initialRotation;
-            var t = 0f;
-
-            _rotating = true;
-
-            while (_rotating)
+            if (transform.rotation == finalRotation)
             {
-                var incrementalRotation = (rotation / duration) * Time.deltaTime;
-
-                if (Math.Abs(t + incrementalRotation) > Math.Abs(rotation))
-                {
-                    transform.Rotate(new Vector3 { y = rotation - t });
-                    break;
-                }
-                else
-                {
-                    t += incrementalRotation;
-                    transform.Rotate(new Vector3 { y = incrementalRotation });
-                    yield return null;
-                }
+                Debug.Log($"Initial Rotation: {_eulerRotation}; Final Rotation: {finalEulers}");
+                yield break;
             }
 
+            var speed = (finalEulers.z - _eulerRotation.z) / duration;
+            var condition = (speed > 0) ? new Func<Vector3, bool>((Vector3 eulers) => eulers.z < finalEulers.z) : new Func<Vector3, bool>((Vector3 eulers) => eulers.z > finalEulers.z);
+            _rotating = true;
+
+            while (condition(_eulerRotation))
+            {
+                _eulerRotation.z += speed * Time.deltaTime;
+                transform.rotation = Quaternion.Euler(_eulerRotation);
+                yield return null;
+            }
+            transform.rotation = finalRotation;
+
             _rotating = false;
+        }
+
+        public List<Coroutine> DoCardStuff(Vector3 destPosition, Quaternion destRotation, float speed)
+        {
+            var coroutines = new List<Coroutine>();
+            var duration = Vector3.Distance(transform.position, destPosition) / speed;
+
+            coroutines.Add(StartCoroutine(MoveTo(destPosition, speed)));
+            coroutines.Add(StartCoroutine(RotateTo(destRotation, duration)));
+
+            return coroutines;
         }
     }
 }

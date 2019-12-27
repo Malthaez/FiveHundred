@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MatchingGame.Factories;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -32,7 +33,9 @@ namespace MatchingGame.Behaviors
             var rotation = flipDirection == FaceDirection.Up ? 180f : -180f;
             var totalDuration = duration * Math.Abs(rotation / 180f);
             var t = 0f;
+
             _flipping = true;
+
             while (_flipping)
             {
                 var incrementalRotation = (rotation / totalDuration) * Time.deltaTime;
@@ -49,7 +52,6 @@ namespace MatchingGame.Behaviors
                     yield return null;
                 }
             }
-            // transform.eulerAngles = new Vector3(transform.eulerAngles.x, FaceDirectionFactory.GetFaceDirectionRotation(flipDirection).y, transform.eulerAngles.z);
 
             _faceDirection = flipDirection;
             _flipping = false;

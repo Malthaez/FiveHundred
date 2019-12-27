@@ -45,7 +45,7 @@ namespace MatchingGame.Managers
                 {
                     StartCoroutine(card.Flip(FaceDirection.Up, 0.1f));
                 };
-                StartCoroutine(dealable.ArrangeCards(dealable.transform.position + new Vector3((dealable.Cards.Count / 2f) * 0.25f, 0f, 0f)));
+                StartCoroutine(dealable.ArrangeCards());
             };
 
             yield return deck.Shuffle();
@@ -62,7 +62,7 @@ namespace MatchingGame.Managers
                 {
                     StartCoroutine(card.Flip(FaceDirection.Up, 0.1f));
                 };
-                StartCoroutine(dealable.ArrangeCards(dealable.transform.position + new Vector3((dealable.Cards.Count / 2f) * 0.25f, 0f, 0f)));
+                StartCoroutine(dealable.ArrangeCards());
             };
 
             yield return dealer.Deal(GetDealables(dealables, dealer), deck, new[] { 3, 2 }, dealCallback, null, (Dealable dealable) => dealable.name == "Kitty" && dealable.Cards.Count >= 5);

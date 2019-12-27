@@ -70,7 +70,8 @@ namespace MatchingGame.Behaviors
 
             foreach (var movement in movements)
             {
-                yield return card.MoveTo(transform.position + movement, 10.0f);
+                var coroutines = card.DoCardStuff(transform.position + movement, transform.rotation, 10.0f);
+                yield return this.AwaitAllCoroutines(coroutines);
             }
         }
 
@@ -80,13 +81,9 @@ namespace MatchingGame.Behaviors
 
             foreach (var card in cards)
             {
-                var cardMoveSpeed = 60.0f;
-                var duration = Vector3.Distance(card.transform.position, transform.position) / cardMoveSpeed;
-
-                coroutines.Add(StartCoroutine(card.MoveTo(transform.position, cardMoveSpeed)));
-                coroutines.Add(StartCoroutine(card.RotateTo(transform.rotation.eulerAngles.z, duration)));
+                coroutines.AddRange(card.DoCardStuff(transform.position, transform.rotation, 60.0f));
+                coroutines.Add(StartCoroutine(card.Flip(FaceDirection.Down, 0.1f)));
                 card.transform.parent = transform;
-                StartCoroutine(card.Flip(FaceDirection.Down, 0.1f));
             }
 
             return coroutines;
