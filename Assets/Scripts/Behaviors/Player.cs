@@ -1,4 +1,5 @@
 ﻿using MatchingGame.Enums;
+using MatchingGame.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,58 +7,54 @@ using UnityEngine;
 
 namespace MatchingGame.Behaviors
 {
-    public class Player : MonoBehaviour
+    /// <summary>
+    /// A Dealable that can take actions in a game
+    /// </summary>
+    public class Player : Dealable, IDealer
     {
         [SerializeField] private SeatPositionEnum _seat;
-        [SerializeField] private List<Card> _hand;
 
         public SeatPositionEnum Seat { get => _seat; set => _seat = value; }
-        public List<Card> Hand => _hand;
 
-        public void AddToHand(Card card)
+        public void DiscardHand() => DiscardCards();
+
+        public IEnumerator DealTo(Dealable dealable, List<Card> cards, Action<Dealable, Card> onSuccessfulDeal)
         {
-            _hand.Add(card);
-            card.transform.SetParent(transform);
-        }
-
-        public void DiscardHand()
-        {
-            _hand.Clear();
-        }
-
-        public Vector3 GetNextCardPosition() => transform.position + (new Vector3 { x = 0.25f, y = 0f, z = 0.15f } * _hand.Count);
-
-        public IEnumerator Draw(Deck deck, int drawCount, Action<Player, Card> onSuccessfulDraw)
-        {
-            if (drawCount <= 0) { yield break; }
-
-            onSuccessfulDraw += (Player player, Card card) => AddToHand(card);
-
-            for (int i = 0; i < drawCount; i++)
+            foreach (var card in cards)
             {
-                yield return deck.Draw(this, onSuccessfulDraw, (Card card) => card.MoveTo(GetNextCardPosition(), 45.0f, () => { if (_seat == SeatPositionEnum.Bottom) { card.FlipUp(); } }));
+                yield return dealable.ReceiveCard(card);
+                onSuccessfulDeal?.Invoke(dealable, card);
             }
         }
 
-        public IEnumerator Deal(List<Player> players, Deck deck, Action<Player, Card> onSuccessfulDraw, Func<bool> continueDeal)
+        public IEnumerator Deal(List<Dealable> dealables, Deck deck, int[] dealCount, Action<Dealable, Card> onSuccessfulDeal, Func<bool> continueDeal, Func<Dealable, bool> skipDealable)
         {
             // Start dealing to the left of the dealer
-            var n = players.IndexOf(this) + 1;
-            Debug.Log($"Player {n} is dealing");
+            var dealIndex = dealables.IndexOf(this) + 1;
+            var dealCountIndex = 0;
+            Debug.Log($"Player {dealIndex} is dealing");
 
-            // Get deck's card count since we can't alter the deck's contents while looping
-            int count = deck.Cards.Count;
+            var cards = new List<Card>();
 
-            onSuccessfulDraw += (Player player, Card card) => { count--; };
-
-            while (count > 0 && (continueDeal != null ? continueDeal() : true))
+            while (deck.DrawIndex < deck.Cards.Count && (continueDeal != null ? continueDeal() : true))
             {
-                n++;
-                n %= players.Count;
+                dealIndex++;
+                dealIndex %= dealables.Count;
 
-                // Debug.Log(count);
-                yield return players[n].Draw(deck, 1, onSuccessfulDraw);
+                // Check to see if we skip this dealable
+                if (skipDealable(dealables[dealIndex])) { continue; }
+
+                cards = deck.Take(dealCount[dealCountIndex]);
+                yield return DealTo(dealables[dealIndex], cards, onSuccessfulDeal);
+
+                if (dealIndex == dealables.IndexOf(this))
+                {
+                    dealCountIndex++;
+                    dealCountIndex %= dealCount.Length;
+                }
             }
         }
+
+        public IEnumerator Deal(List<Dealable> dealables, Deck deck, int dealCount, Action<Dealable, Card> onSuccessfulDeal, Func<bool> continueDeal, Func<Dealable, bool> skipDealable) => Deal(dealables, deck, new[] { dealCount }, onSuccessfulDeal, continueDeal, skipDealable);
     }
 }

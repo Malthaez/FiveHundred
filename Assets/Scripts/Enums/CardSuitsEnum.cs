@@ -11,6 +11,8 @@
         Circle,
         Triangle,
         Star,
+        NoTrump,
+        Joker,
         MAX
     }
 }

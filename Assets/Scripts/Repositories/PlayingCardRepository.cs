@@ -15,8 +15,27 @@ namespace MatchingGame.Repositories
         [SerializeField] private List<Sprite> _spadesArtImages; //Must be set in editor.
         [SerializeField] private List<Sprite> _heartsArtImages; //Must be set in editor.
         [SerializeField] private List<Sprite> _diamondsArtImages; //Must be set in editor.
+        [SerializeField] private List<Sprite> _jokerArtImages; //Must be set in editor.
 
         public CardService _cardService;
+
+        private Dictionary<CardValuesEnum, int> artIndexFromValue = new Dictionary<CardValuesEnum, int>
+        {
+            { CardValuesEnum.Ace, 0 },
+            { CardValuesEnum.Two, 1 },
+            { CardValuesEnum.Three, 2 },
+            { CardValuesEnum.Four, 3 },
+            { CardValuesEnum.Five, 4 },
+            { CardValuesEnum.Six, 5 },
+            { CardValuesEnum.Seven, 6 },
+            { CardValuesEnum.Eight, 7 },
+            { CardValuesEnum.Nine, 8 },
+            { CardValuesEnum.Ten, 9 },
+            { CardValuesEnum.Jack, 10 },
+            { CardValuesEnum.Queen, 11 },
+            { CardValuesEnum.King, 12 },
+            { CardValuesEnum.Joker, 0 }
+        };
 
         public void Initialize(CardService cardService)
         {
@@ -27,7 +46,8 @@ namespace MatchingGame.Repositories
                 { CardSuitsEnum.Club, _clubsArtImages },
                 { CardSuitsEnum.Spade, _spadesArtImages },
                 { CardSuitsEnum.Heart, _heartsArtImages },
-                { CardSuitsEnum.Diamond, _diamondsArtImages }
+                { CardSuitsEnum.Diamond, _diamondsArtImages },
+                { CardSuitsEnum.Joker,  _jokerArtImages }
             };
         }
 
@@ -37,7 +57,7 @@ namespace MatchingGame.Repositories
 
             card.Suit = cardSuit;
             card.Value = (int)cardValue;
-            card.Art = _playingCardArtImages[cardSuit][(int)cardValue - 1];
+            card.Art = _playingCardArtImages[cardSuit][artIndexFromValue[cardValue]];
 
             return card;
         }

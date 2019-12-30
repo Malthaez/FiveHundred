@@ -1,14 +1,16 @@
-﻿using System;
+﻿using MatchingGame.Enums;
+using MatchingGame.Utilities;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using static MatchingGame.Utilities.CoroutineUtilities;
 
 namespace MatchingGame.Behaviors
 {
     public class Deck : MonoBehaviour
     {
         [SerializeField] private List<Card> _cards;
+        [SerializeField] private List<Card> _removedCards;
         [SerializeField] private int _drawIndex;
 
         public List<Card> Cards { get => _cards; private set => _cards = value; }
@@ -19,6 +21,23 @@ namespace MatchingGame.Behaviors
             _cards.Add(card);
             card.transform.parent = transform;
         }
+
+        public void RemoveCard(Card card)
+        {
+            _cards.Remove(card);
+            card.gameObject.SetActive(false);
+            _removedCards.Add(card);
+        }
+
+        public void RemoveCards(IEnumerable<Card> cards)
+        {
+            foreach (var card in cards)
+            {
+                RemoveCard(card);
+            }
+        }
+
+        public void RemoveCardsByValues(IEnumerable<CardValuesEnum> cardValues) => RemoveCards(_cards.Where(card => cardValues.Any(value => card.Value == (int)value)).ToList());
 
         public IEnumerator Shuffle()
         {
@@ -35,7 +54,7 @@ namespace MatchingGame.Behaviors
                 coroutines.Add(StartCoroutine(MoveCardInDeck(_cards[k], k)));
             }
 
-            yield return AwaitAllCoroutines(coroutines);
+            yield return this.AwaitAllCoroutines(coroutines);
         }
 
         public IEnumerator MoveCardInDeck(Card card, int newIndex)
@@ -49,9 +68,10 @@ namespace MatchingGame.Behaviors
                 new Vector3(0.00f, 0.00f, 0.15f * newIndex) // In
             };
 
-            foreach(var movement in movements)
+            foreach (var movement in movements)
             {
-                yield return card.MoveTo(transform.position + movement, 10.0f, null);
+                var coroutines = card.DoCardStuff(transform.position + movement, transform.rotation, 10.0f);
+                yield return this.AwaitAllCoroutines(coroutines);
             }
         }
 
@@ -61,7 +81,9 @@ namespace MatchingGame.Behaviors
 
             foreach (var card in cards)
             {
-                coroutines.Add(StartCoroutine(card.MoveTo(transform.position, 60.0f, () => { card.transform.parent = transform; if (card.Flipped || card.Flipping) { card.FlipDown(); } })));
+                coroutines.AddRange(card.DoCardStuff(transform.position, transform.rotation, 60.0f));
+                //coroutines.Add(StartCoroutine(card.Flip(FaceDirection.Down, 0.1f)));
+                card.transform.parent = transform;
             }
 
             return coroutines;
@@ -69,26 +91,36 @@ namespace MatchingGame.Behaviors
 
         public IEnumerator ReturnCards(IEnumerable<Card> cards)
         {
-            yield return AwaitAllCoroutines(GetReturnCardCoroutines(cards));
+            yield return this.AwaitAllCoroutines(GetReturnCardCoroutines(cards));
             _drawIndex = 0;
         }
 
-        public IEnumerator Draw(Player player, Action<Player, Card> onSuccessfulDraw, Func<Card, IEnumerator> awaitOnSuccessfulDraw)
+        public Card Take()
         {
+            Debug.Log(_cards.Count - _drawIndex);
             Card card = null;
-            Action<Player, Card> callback = null;
-            Func<Card, IEnumerator> awaitCallback = null;
 
             if (_drawIndex < _cards.Count)
             {
                 card = _cards[_drawIndex];
-                callback = onSuccessfulDraw;
-                awaitCallback = awaitOnSuccessfulDraw;
                 _drawIndex++;
             }
 
-            callback(player, card);
-            yield return awaitCallback.Invoke(card);
+            return card;
+        }
+
+        public List<Card> Take(int count)
+        {
+            var cards = new List<Card>();
+
+            for (int i = 0; i < count; i++)
+            {
+                var card = Take();
+                if (card == null) { break; }
+                cards.Add(card);
+            }
+
+            return cards;
         }
     }
 }

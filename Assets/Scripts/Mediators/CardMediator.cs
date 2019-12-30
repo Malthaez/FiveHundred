@@ -31,7 +31,7 @@ namespace MatchingGame.Mediators
             {
                 if (card == null) { return false; }
                 Cards.Add(card);
-                card.OnFlipEnd = ResolveSelect;
+                //card.OnFlipEnd = ResolveSelect;
                 card.transform.SetParent(_cardContainer);
                 isRegistered = true;
             }
@@ -47,7 +47,7 @@ namespace MatchingGame.Mediators
             try
             {
                 if (Cards.Contains(card)) { Cards.Remove(card); }
-                card.OnFlipEnd = null;
+                //card.OnFlipEnd = null;
                 isRegistered = true;
             }
             catch { }
@@ -118,9 +118,9 @@ namespace MatchingGame.Mediators
         {
             foreach (var card in cards)
             {
-                card.OnFlipEnd = null;
-                yield return card.FlipUp(0.25f, 0.1f);
-                card.OnFlipEnd = ResolveSelect;
+                //card.OnFlipEnd = null;
+                yield return card.Flip(card.FaceDirection == FaceDirection.Up ? FaceDirection.Down : FaceDirection.Up, 0.25f);
+                //card.OnFlipEnd = ResolveSelect;
             }
         }
 
