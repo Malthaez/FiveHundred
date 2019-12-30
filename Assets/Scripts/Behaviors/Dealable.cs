@@ -21,7 +21,8 @@ namespace MatchingGame.Behaviors
         {
             _cards.Add(card);
 
-            yield return this.AwaitAllCoroutines(card.DoCardStuff(this.GetLastCardPosition(), transform.rotation, 45.0f, _revealCards));
+            // yield return this.AwaitAllCoroutines(card.DoCardStuff(this.GetLastCardPosition(), transform.rotation, 45.0f, _revealCards));
+            yield return this.AwaitAllCoroutines(card.DoCardStuff(this.GetCardPosition((this is Player) ? (this as Player).Seat : Enums.SeatPositionEnum.NONE, _cards.Count - 1), transform.rotation, 45.0f, _revealCards));
 
             card.transform.SetParent(transform);
         }
@@ -32,7 +33,8 @@ namespace MatchingGame.Behaviors
 
             for (int i = 0; i < _cards.Count; i++)
             {
-                coroutines.AddRange(_cards[i].DoCardStuff(this.GetCardPositionByIndex(i), transform.rotation, 45.0f, _revealCards));
+                // coroutines.AddRange(_cards[i].DoCardStuff(this.GetCardPositionByIndex(i), transform.rotation, 45.0f, _revealCards));
+                coroutines.AddRange(_cards[i].DoCardStuff(this.GetCardPosition((this is Player) ? (this as Player).Seat : Enums.SeatPositionEnum.NONE, i), transform.rotation, 45.0f, _revealCards));
             }
 
             yield return this.AwaitAllCoroutines(coroutines);
