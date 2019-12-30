@@ -16,39 +16,7 @@ namespace MatchingGame.Behaviors
 
         public SeatPositionEnum Seat { get => _seat; set => _seat = value; }
 
-        //public IEnumerator AddToHand(Card card)
-        //{
-        //    Cards.Add(card);
-
-        //    // var startPosition = transform.position + new Vector3((Cards.Count / 2f) * 0.25f, 0f, 0f);
-
-        //    yield return card.MoveTo(this.GetLastCardPosition(), 45.0f);
-        //    card.transform.SetParent(transform);
-        //}
-
         public void DiscardHand() => DiscardCards();
-
-        //public IEnumerator ArrangeHand(Vector3 startPosition)
-        //{
-        //    var coroutines = new List<Coroutine>();
-
-        //    for (int i = 0; i < Cards.Count; i++)
-        //    {
-        //        coroutines.Add(StartCoroutine(Cards[i].MoveTo(this.GetCardPositionByIndex(i), 40f)));
-        //    }
-
-        //    yield return this.AwaitAllCoroutines(coroutines);
-        //}
-
-        //public IEnumerator Draw(Deck deck, int drawCount)
-        //{
-        //    if (drawCount <= 0) { yield break; }
-
-        //    for (int i = 0; i < drawCount; i++)
-        //    {
-        //        yield return AddToHand(deck.Take());
-        //    }
-        //}
 
         public IEnumerator DealTo(Dealable dealable, List<Card> cards, Action<Dealable, Card> onSuccessfulDeal)
         {
