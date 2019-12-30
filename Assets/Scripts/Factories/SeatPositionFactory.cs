@@ -1,4 +1,5 @@
-﻿using MatchingGame.Enums;
+﻿using MatchingGame.Behaviors;
+using MatchingGame.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,5 +17,7 @@ namespace MatchingGame.Factories
         };
 
         public static Dictionary<SeatPositionEnum, Vector3> SeatPositionPositionModifiers => _seatPositionPositionModifiers;
+
+        public static SeatPositionEnum GetSeatPosition(Dealable dealable) => (dealable is Player) ? (dealable as Player).Seat : SeatPositionEnum.NONE;
     }
 }

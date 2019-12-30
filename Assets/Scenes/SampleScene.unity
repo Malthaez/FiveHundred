@@ -601,6 +601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cards: []
+  _revealCards: 0
 --- !u!1 &373597383
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cards: []
+  _revealCards: 0
   _seat: 4
 --- !u!1 &936177306
 GameObject:
@@ -1308,6 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cards: []
+  _revealCards: 0
   _seat: 3
 --- !u!1 &1677734071
 GameObject:
@@ -1909,6 +1912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cards: []
+  _revealCards: 0
   _seat: 2
 --- !u!1 &2081940867
 GameObject:
@@ -1990,4 +1994,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cards: []
+  _revealCards: 1
   _seat: 1

@@ -41,10 +41,6 @@ namespace MatchingGame.Managers
             dealCallback += (Dealable dealable, Card card) => dealer = Rules.CheckForJack(card) ? dealable as Player : dealer;
             dealCallback += (Dealable dealable, Card card) =>
             {
-                //if (dealable as Player != null && ((Player)dealable).Seat == SeatPositionEnum.Bottom)
-                //{
-                //    StartCoroutine(card.Flip(FaceDirection.Up, 0.1f));
-                //};
                 StartCoroutine(dealable.ArrangeCards());
             };
 
@@ -58,10 +54,6 @@ namespace MatchingGame.Managers
             dealCallback = null;
             dealCallback += (Dealable dealable, Card card) =>
             {
-                //if (dealable as Player != null && ((Player)dealable).Seat == SeatPositionEnum.Bottom)
-                //{
-                //    StartCoroutine(card.Flip(FaceDirection.Up, 0.1f));
-                //};
                 StartCoroutine(dealable.ArrangeCards());
             };
 

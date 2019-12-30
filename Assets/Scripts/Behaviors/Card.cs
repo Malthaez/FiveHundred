@@ -31,7 +31,6 @@ namespace MatchingGame.Behaviors
         public bool Moving { get => _moving; set => _moving = value; }
         public bool Rotating => _rotating;
 
-
         public IEnumerator Flip(FaceDirection flipDirection, float duration) => GetComponentInChildren<CardAvatar>().Flip(flipDirection, duration);
 
         private IEnumerator MoveTo(Vector3 destinationPosition, float speed)
@@ -59,37 +58,6 @@ namespace MatchingGame.Behaviors
 
             _moving = false;
         }
-
-        //public IEnumerator RotateTo(float finalRotation, float duration)
-        //{
-        //    var initialRotation = transform.rotation.eulerAngles.z;
-
-        //    if (initialRotation == finalRotation) { yield break; }
-
-        //    var rotation = finalRotation - initialRotation;
-        //    var t = 0f;
-
-        //    _rotating = true;
-
-        //    while (_rotating)
-        //    {
-        //        var incrementalRotation = (rotation / duration) * Time.deltaTime;
-
-        //        if (Math.Abs(t + incrementalRotation) > Math.Abs(rotation))
-        //        {
-        //            transform.Rotate(new Vector3 { y = rotation - t });
-        //            break;
-        //        }
-        //        else
-        //        {
-        //            t += incrementalRotation;
-        //            transform.Rotate(new Vector3 { y = incrementalRotation });
-        //            yield return null;
-        //        }
-        //    }
-
-        //    _rotating = false;
-        //}
 
         private IEnumerator RotateTo(Quaternion finalRotation, float duration)
         {
