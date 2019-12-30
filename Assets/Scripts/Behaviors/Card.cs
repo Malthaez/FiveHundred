@@ -1,115 +1,39 @@
 ﻿using MatchingGame.Enums;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace MatchingGame.Behaviors
 {
-    [RequireComponent(typeof(Collider))]
     public class Card : MonoBehaviour
     {
         [SerializeField] private CardSuitsEnum _cardSuit;
         [SerializeField] private int _value;
         [SerializeField] private Image _cardArt;
         [SerializeField] private Image _cardBack;
+        [SerializeField] private Vector3 _eulerRotation;
 
         public CardSuitsEnum Suit { get => _cardSuit; set => _cardSuit = value; }
         public int Value { get => _value; set => _value = value; }
         public Sprite Art { get => _cardArt.sprite; set => _cardArt.sprite = value; }
         public Sprite Back { get => _cardBack.sprite; set => _cardBack.sprite = value; }
+        public Vector3 EulerRotation { get => _eulerRotation; set => _eulerRotation = value; }
 
         //========
 
-        protected bool _flipping = false;
-        protected bool _flipped = false;
         protected bool _moving = false;
-        private Coroutine _flipCoroutine;
+        protected bool _rotating = false;
 
-        public bool Flipping => _flipping;
-        public bool Flipped => _flipped;
-
+        public FaceDirection FaceDirection => GetComponentInChildren<CardAvatar>().FaceDirection;
+        public bool Flipping => GetComponentInChildren<CardAvatar>().Flipping;
         public bool Moving { get => _moving; set => _moving = value; }
-        public Coroutine FlipCoroutine { get => _flipCoroutine; set => _flipCoroutine = value; }
+        public bool Rotating => _rotating;
 
-        public delegate void OnFlip(Card card);
-        public OnFlip OnFlipStart { get; set; }
-        public OnFlip OnEachFlipFrame { get; set; }
-        public OnFlip OnFlipEnd { get; set; }
+        public IEnumerator Flip(FaceDirection flipDirection, float duration) => GetComponentInChildren<CardAvatar>().Flip(flipDirection, duration);
 
-        private void GetMouseInput()
-        {
-            /* Mouse Left */
-            if (Input.GetMouseButtonUp(0)) { if (!_flipping && !_flipped) { FlipUp(); } }
-            /* Mouse Right */
-            if (Input.GetMouseButtonUp(1)) { if (!_flipping && _flipped) { FlipDown(); } }
-            /* Mouse Middle */
-            if (Input.GetMouseButtonUp(2)) { }
-        }
-
-        private void OnMouseOver() => GetMouseInput();
-
-        public Coroutine FlipDown(float duration, float pause)
-        {
-            if (_flipCoroutine != null) { StopCoroutine(_flipCoroutine); }
-            _flipCoroutine = StartCoroutine(IFlip(-180f, duration, pause));
-            return _flipCoroutine;
-        }
-
-        public Coroutine FlipDown(float duration) => FlipDown(duration, 0.1f);
-
-        public Coroutine FlipDown() => FlipDown(0.1f);
-
-        public Coroutine FlipUp(float duration, float pause)
-        {
-            if (_flipCoroutine != null) { StopCoroutine(_flipCoroutine); }
-            _flipCoroutine = StartCoroutine(IFlip(180f, duration, pause));
-            return _flipCoroutine;
-        }
-
-        public Coroutine FlipUp(float duration) => FlipUp(duration, 0.1f);
-
-        public Coroutine FlipUp() => FlipUp(0.1f);
-
-        private IEnumerator IFlip(float rotation, float duration, float pause)
-        {
-            OnFlipStart?.Invoke(this);
-
-            if (rotation != 0)
-            {
-                var totalDuration = duration * Math.Abs(rotation / 180f);
-                var t = 0f;
-                _flipping = true;
-
-                while (true)
-                {
-                    OnEachFlipFrame?.Invoke(this);
-
-                    float incrementalRotation = (rotation / totalDuration) * Time.deltaTime;
-
-                    if (Math.Abs(t + incrementalRotation) > Math.Abs(rotation))
-                    {
-                        transform.Rotate(new Vector3 { z = rotation - t });
-                        break;
-                    }
-                    else
-                    {
-                        t += incrementalRotation;
-                        transform.Rotate(new Vector3 { z = incrementalRotation });
-                        yield return null;
-                    }
-                }
-
-                yield return new WaitForSeconds(pause);
-
-                _flipped = !_flipped;
-                _flipping = false;
-            }
-
-            OnFlipEnd?.Invoke(this);
-        }
-
-        public IEnumerator MoveTo(Vector3 destinationPosition, float speed, Action onMoveEnd)
+        private IEnumerator MoveTo(Vector3 destinationPosition, float speed)
         {
             var startTime = Time.time;
             var startPosition = transform.position;
@@ -133,9 +57,45 @@ namespace MatchingGame.Behaviors
             }
 
             _moving = false;
-
-            onMoveEnd?.Invoke();
-            // yield return awaitOnMoveEnd(this);
         }
+
+        private IEnumerator RotateTo(Quaternion finalRotation, float duration)
+        {
+            var finalEulers = finalRotation.eulerAngles;
+
+            if (transform.rotation == finalRotation)
+            {
+                Debug.Log($"Initial Rotation: {_eulerRotation}; Final Rotation: {finalEulers}");
+                yield break;
+            }
+
+            var speed = (finalEulers.z - _eulerRotation.z) / duration;
+            var condition = (speed > 0) ? new Func<Vector3, bool>((Vector3 eulers) => eulers.z < finalEulers.z) : new Func<Vector3, bool>((Vector3 eulers) => eulers.z > finalEulers.z);
+            _rotating = true;
+
+            while (condition(_eulerRotation))
+            {
+                _eulerRotation.z += speed * Time.deltaTime;
+                transform.rotation = Quaternion.Euler(_eulerRotation);
+                yield return null;
+            }
+            transform.rotation = finalRotation;
+
+            _rotating = false;
+        }
+
+        public List<Coroutine> DoCardStuff(Vector3 destPosition, Quaternion destRotation, float speed, bool revealCard)
+        {
+            var coroutines = new List<Coroutine>();
+            var duration = Vector3.Distance(transform.position, destPosition) / speed;
+
+            coroutines.Add(StartCoroutine(MoveTo(destPosition, speed)));
+            coroutines.Add(StartCoroutine(RotateTo(destRotation, duration)));
+            coroutines.Add(StartCoroutine(Flip(revealCard ? FaceDirection.Up : FaceDirection.Down, duration)));
+
+            return coroutines;
+        }
+
+        public List<Coroutine> DoCardStuff(Vector3 destPosition, Quaternion destRotation, float speed) => DoCardStuff(destPosition, destRotation, speed, false);
     }
 }

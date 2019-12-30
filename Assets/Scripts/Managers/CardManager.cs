@@ -89,6 +89,9 @@ namespace MatchingGame.Managers
                 }
             }
 
+            deck.AddCard(CreatePlayingCard(CardSuitsEnum.Joker, CardValuesEnum.Joker));
+            deck.AddCard(CreatePlayingCard(CardSuitsEnum.Joker, CardValuesEnum.Joker));
+
             return deck;
         }
 

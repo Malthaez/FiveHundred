@@ -8,8 +8,10 @@ namespace MatchingGame.DataSource
     {
         [SerializeField] private int _cardPairsCount;
         [SerializeField] private List<Player> _players;
+        [SerializeField] private Dealable _kitty;
 
-        public int CardPairsCount { get => _cardPairsCount; set => _cardPairsCount = value; }
-        public List<Player> Players { get => _players; set => _players = value; }
+        public int CardPairsCount => _cardPairsCount;
+        public List<Player> Players => _players;
+        public Dealable Kitty => _kitty;
     }
 }
