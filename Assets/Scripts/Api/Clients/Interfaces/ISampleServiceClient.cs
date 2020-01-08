@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MatchingGame.Api.Clients.Interfaces
+namespace Assets.Scripts.API.Clients.Interfaces
 {
     public interface ISampleServiceClient
     {

@@ -1,7 +1,7 @@
-﻿using MatchingGame.Api.DTOs;
-using MatchingGame.Api.DTOs.Enums;
+﻿using Assets.Scripts.API.DTOs;
+using Assets.Scripts.API.DTOs.Enums;
 
-namespace MatchingGame.Api.Interfaces.Repositories
+namespace Assets.Scripts.API.Interfaces.Repositories
 {
     public interface ICardRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace MatchingGame.Api.DTOs.Enums
+﻿namespace Assets.Scripts.API.DTOs.Enums
 {
     public enum CardSuit
     {

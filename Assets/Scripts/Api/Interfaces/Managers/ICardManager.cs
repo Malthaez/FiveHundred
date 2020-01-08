@@ -1,6 +1,6 @@
-﻿using MatchingGame.Api.DTOs;
+﻿using Assets.Scripts.API.DTOs;
 
-namespace MatchingGame.Api.Interfaces.Managers
+namespace Assets.Scripts.API.Interfaces.Managers
 {
     public interface ICardManager
     {

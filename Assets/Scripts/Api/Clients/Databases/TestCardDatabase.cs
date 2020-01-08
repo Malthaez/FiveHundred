@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace MatchingGame.Api.Clients.Databases
+namespace Assets.Scripts.API.Clients.Databases
 {
     public class TestCardDatabase : MonoBehaviour
     {

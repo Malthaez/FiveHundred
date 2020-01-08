@@ -1,7 +1,7 @@
-﻿using MatchingGame.Api.DTOs;
+﻿using Assets.Scripts.API.DTOs;
 using System.Collections.Generic;
 
-namespace MatchingGame.Api.Repositories.Maps
+namespace Assets.Scripts.API.Repositories.Maps
 {
     public static class CardMap
     {

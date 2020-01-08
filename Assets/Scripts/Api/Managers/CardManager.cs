@@ -1,8 +1,8 @@
-﻿using MatchingGame.Api.DTOs;
-using MatchingGame.Api.Interfaces.Managers;
-using MatchingGame.Api.Interfaces.Repositories;
+﻿using Assets.Scripts.API.DTOs;
+using Assets.Scripts.API.Interfaces.Managers;
+using Assets.Scripts.API.Interfaces.Repositories;
 
-namespace MatchingGame.Api.Managers
+namespace Assets.Scripts.API.Managers
 {
     public class CardManager : ICardManager
     {

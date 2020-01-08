@@ -1,10 +1,10 @@
-﻿using MatchingGame.Api.Clients.Interfaces;
-using MatchingGame.Api.DTOs;
-using MatchingGame.Api.DTOs.Enums;
-using MatchingGame.Api.Interfaces.Repositories;
+﻿using Assets.Scripts.API.Clients.Interfaces;
+using Assets.Scripts.API.DTOs;
+using Assets.Scripts.API.DTOs.Enums;
+using Assets.Scripts.API.Interfaces.Repositories;
 using System.Collections.Generic;
 
-namespace MatchingGame.Api.Repositories
+namespace Assets.Scripts.API.Repositories
 {
     public class CardRepository : ICardRepository
     {

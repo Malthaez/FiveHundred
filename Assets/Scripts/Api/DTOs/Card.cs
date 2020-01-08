@@ -1,6 +1,6 @@
-﻿using MatchingGame.Api.DTOs.Enums;
+﻿using Assets.Scripts.API.DTOs.Enums;
 
-namespace MatchingGame.Api.DTOs
+namespace Assets.Scripts.API.DTOs
 {
     public class Card
     {

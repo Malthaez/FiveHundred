@@ -1,9 +1,9 @@
-﻿using MatchingGame.Api.DTOs.Enums;
-using MatchingGame.Api.ServiceModels.Enums;
-using MatchingGame.Api.ServiceModels.Messages;
-using MatchingGame.Api.ServiceModels.Models;
+﻿using Assets.Scripts.API.DTOs.Enums;
+using Assets.Scripts.API.ServiceModels.Enums;
+using Assets.Scripts.API.ServiceModels.Messages;
+using Assets.Scripts.API.ServiceModels.Models;
 
-namespace MatchingGame.Api.DTOs.Mappers
+namespace Assets.Scripts.API.DTOs.Mappers
 {
     public static class CardMap
     {

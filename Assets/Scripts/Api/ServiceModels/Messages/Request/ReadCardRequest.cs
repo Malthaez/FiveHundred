@@ -1,11 +1,11 @@
-﻿using MatchingGame.Api.ServiceModels.Enums;
+﻿using Assets.Scripts.API.ServiceModels.Enums;
 
-namespace MatchingGame.Api.ServiceModels.Messages
+namespace Assets.Scripts.API.ServiceModels.Messages
 {
-    //[ApiRoute(Route = "GET", Description = "Get Card from Card Value")]
+    //[APIRoute(Route = "GET", Description = "Get Card from Card Value")]
     public class ReadCardRequest /*: IReturn<GetCardResponse> */
     {
-        //[ApiMember(Description = "Card's suit.")]
+        //[APIMember(Description = "Card's suit.")]
         public CardSuitModel? CardSuit { get; set; }
     }
 }

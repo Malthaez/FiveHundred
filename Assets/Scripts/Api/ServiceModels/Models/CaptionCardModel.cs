@@ -1,8 +1,8 @@
-﻿namespace MatchingGame.Api.ServiceModels.Models
+﻿namespace Assets.Scripts.API.ServiceModels.Models
 {
     public class CaptionCardModel : CardModel
     {
-        //[ApiMember(Description = "Card's text.")]
+        //[APIMember(Description = "Card's text.")]
         public string CardText { get; set; }
     }
 }

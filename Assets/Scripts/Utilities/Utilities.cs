@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MatchingGame.Utilities
+namespace Assets.Scripts.Utilities
 {
     public static class CoroutineUtilities
     {

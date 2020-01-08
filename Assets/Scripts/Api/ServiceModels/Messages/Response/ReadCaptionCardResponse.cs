@@ -1,13 +1,13 @@
-﻿using MatchingGame.Api.ServiceModels.Models;
+﻿using Assets.Scripts.API.ServiceModels.Models;
 
-namespace MatchingGame.Api.ServiceModels.Messages
+namespace Assets.Scripts.API.ServiceModels.Messages
 {
     public class ReadCardResponse /*: IHasResponseStatus*/
     {
-        //[ApiMember(Description = "Contains any/all exceptions.")]
+        //[APIMember(Description = "Contains any/all exceptions.")]
         public bool ResponseStatus { get; set; }
 
-        //[ApiMember(Description = "")]
+        //[APIMember(Description = "")]
         public CaptionCardModel CaptionCard { get; set; }
     }
 }

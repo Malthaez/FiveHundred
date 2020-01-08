@@ -1,10 +1,10 @@
-﻿using MatchingGame.Api.ServiceModels.Enums;
+﻿using Assets.Scripts.API.ServiceModels.Enums;
 
-namespace MatchingGame.Api.ServiceModels.Models
+namespace Assets.Scripts.API.ServiceModels.Models
 {
     public class CardModel
     {
-        //[ApiMember(Description = "Card's suit.")]
+        //[APIMember(Description = "Card's suit.")]
         public CardSuitModel? CardSuit { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿using MatchingGame.Api.Clients.Databases;
-using MatchingGame.Api.Clients.Interfaces;
+﻿using Assets.Scripts.API.Clients.Databases;
+using Assets.Scripts.API.Clients.Interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace MatchingGame.Api.Clients
+namespace Assets.Scripts.API.Clients
 {
     public class SampleServiceClient : ISampleServiceClient, IDisposable
     {

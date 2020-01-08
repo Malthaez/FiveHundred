@@ -1,8 +1,8 @@
-﻿using MatchingGame.Api.DTOs.Mappers;
-using MatchingGame.Api.Interfaces.Managers;
-using MatchingGame.Api.ServiceModels.Messages;
+﻿using Assets.Scripts.API.DTOs.Mappers;
+using Assets.Scripts.API.Interfaces.Managers;
+using Assets.Scripts.API.ServiceModels.Messages;
 
-namespace MatchingGame.Api.ServiceDefinitions
+namespace Assets.Scripts.API.ServiceDefinitions
 {
     public class CardService /*: Service*/
     {

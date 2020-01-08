@@ -1,4 +1,4 @@
-﻿namespace MatchingGame.Api.ServiceModels.Enums
+﻿namespace Assets.Scripts.API.ServiceModels.Enums
 {
     public enum CardSuitModel
     {

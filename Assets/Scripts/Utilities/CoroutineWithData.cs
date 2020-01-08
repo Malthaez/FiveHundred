@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace MatchingGame.Utilities
+namespace Assets.Scripts.Utilities
 {
     public class CoroutineWithData<T>
     {
