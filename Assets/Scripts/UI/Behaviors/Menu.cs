@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,15 +10,15 @@ namespace Assets.Scripts.UI.Behaviors
         [SerializeField] protected GameObject _buttonsPanel;
         [SerializeField] protected List<Button> _buttons;
 
-        public void SetTitleAndButtons(string title, IEnumerable<Button> buttons)
+        public string Title { get => _titleText.text; set => _titleText.text = value; }
+
+        public IEnumerable<Button> Buttons
         {
-            _titleText.text = title;
-
-            _buttons = buttons.ToList();
-
-            foreach(var button in _buttons)
+            get => _buttons;
+            set
             {
-                button.transform.SetParent(_buttonsPanel.transform);
+                _buttons = new List<Button>(value);
+                foreach (var button in _buttons) { button.transform.SetParent(_buttonsPanel.transform); }
             }
         }
 

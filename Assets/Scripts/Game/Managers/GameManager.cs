@@ -2,6 +2,10 @@
 using Assets.Scripts.Game.Behaviors.Layout;
 using Assets.Scripts.Game.Behaviors.Mappers;
 using Assets.Scripts.Game.DataSource;
+using Assets.Scripts.Game.Mediators;
+using Assets.Scripts.UI.Managers;
+using Assets.Scripts.UI.Mediators;
+using Assets.Scripts.UI.Repositories;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +26,9 @@ namespace Assets.Scripts.Game.Managers
 
         public void Initialize()
         {
+            var menuMediator = new MenuMediator();
+            var bidsMediator = new BidsMediator(new BidsManager(new MenuManager(GetComponent<MenuRepository>())), menuMediator);
+
             _scoreManager = GetComponent<ScoreManager>();
             _cardManager = GetComponent<CardManager>();
             _layoutManager = GetComponent<LayoutManager>();
@@ -31,7 +38,7 @@ namespace Assets.Scripts.Game.Managers
             _scoreManager.Initialize(_gameDataSource.CardPairsCount);
             _cardManager.Initialize(_scoreManager);
             _layoutManager.Initialize();
-            _fiveHundredGameManager.Initialize();
+            _fiveHundredGameManager.Initialize(menuMediator, bidsMediator);
 
             // StartMemoryGame(_gameDataSource.CardPairsCount);
             StartFiveHundredGame(_gameDataSource.Players, _gameDataSource.Kitty);

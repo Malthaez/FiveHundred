@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Game.Behaviors;
 using Assets.Scripts.Game.Enums;
 using Assets.Scripts.Game.Interfaces;
+using Assets.Scripts.Game.Mediators;
+using Assets.Scripts.UI.Mediators;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +13,15 @@ namespace Assets.Scripts.Game.Managers
 {
     public class FiveHundredGameManager : MonoBehaviour
     {
-        public void Initialize() { }
+        [SerializeField] private GameObject _canvas;
+        private MenuMediator _menuMediator;
+        private BidsMediator _bidsMediator;
+
+        public void Initialize(MenuMediator menuMediator, BidsMediator bidsMediator)
+        {
+            _menuMediator = menuMediator;
+            _bidsMediator = bidsMediator;
+        }
 
         public IEnumerator ReturnCardsToDeck(IEnumerable<Dealable> dealable, Deck deck)
         {
@@ -63,6 +73,8 @@ namespace Assets.Scripts.Game.Managers
             {
                 StartCoroutine(dealable.ArrangeCards());
             };
+
+            _bidsMediator.Test(players[0], _canvas);
 
             yield return deck.Shuffle();
             yield return players[0].Deal(dealables, deck, 1, dealCallback, () => dealer == null, (Dealable dealable) => dealable.name == "Kitty");

@@ -1,21 +1,33 @@
 ﻿using Assets.Scripts.UI.Behaviors;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Scripts.UI.Mediators
 {
-    public class MenuMediator : MonoBehaviour
+    public class MenuMediator
     {
-        [SerializeField] private Stack<Menu> _menuStack;
+        private Stack<Menu> _menuStack;
 
-        public void Initialize() => _menuStack = new Stack<Menu>();
+        public MenuMediator()
+        {
+            _menuStack = new Stack<Menu>();
+        }
 
-        public void RegisterMenus(Stack<Menu> menuStack) => _menuStack = menuStack;
+        public void RegisterMenus(IEnumerable<Menu> menuStack) => _menuStack = new Stack<Menu>(menuStack);
 
         public void ClearMenuStack() => _menuStack.Clear();
 
-        public Menu CloseMenu() => _menuStack.Pop();
+        public void CloseMenu()
+        {
+            var menu = _menuStack.Pop();
+            menu.gameObject.SetActive(false);
+            if (_menuStack.Count > 0) { _menuStack.Peek().gameObject.SetActive(true); }
+        }
 
-        public void OpenMenu(Menu menu) => _menuStack.Push(menu);
+        public void OpenMenu(Menu menu)
+        {
+            if (_menuStack.Count > 0) { _menuStack.Peek().gameObject.SetActive(false); }
+            _menuStack.Push(menu);
+            menu.gameObject.SetActive(true);
+        }
     }
 }
