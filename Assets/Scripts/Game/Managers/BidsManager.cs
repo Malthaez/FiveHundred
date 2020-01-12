@@ -3,7 +3,9 @@ using Assets.Scripts.Game.Enums;
 using Assets.Scripts.Game.FiveHundredGame;
 using Assets.Scripts.UI.Behaviors;
 using Assets.Scripts.UI.Managers;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Game.Managers
@@ -17,23 +19,45 @@ namespace Assets.Scripts.Game.Managers
             _menuManager = menuManager;
         }
 
-        // TODO: Finish GetButtons for buttons that are built from strings with void Actions (or possibly do another generic)
-        public List<Menu> CreateBidsMenu(Player player)
+        private Menu CreateTricksMenu(Player player)
         {
-            List<Menu> bidsMenus = new List<Menu>();
+            var tricksMenu = _menuManager.GetMenu("Tricks");
+            var tricksButtonActions = new List<Action<BidsEnum>>
+            {
+                (BidsEnum tricks) => player.bid.Value = tricks,
+                (BidsEnum _) => _menuManager.CloseAllMenus(),
+                (BidsEnum _) => Debug.Log($"Player Bids: {player.bid.Value} {player.bid.Suit}")
+            };
+            var tricksButtons = new List<Button>();
+            tricksButtons = _menuManager.GetButtons(FiveHundredGameRules.FiveHundredTricks, tricksButtonActions);
+            tricksButtons.Add(_menuManager.GetButton("Back", (string _) => _menuManager.CloseMenu()));
+            tricksMenu.Buttons = tricksButtons;
 
+            return tricksMenu;
+        }
+
+        private Menu CreateSuitsMenu(Player player, Menu tricksMenu)
+        {
+            var suitsMenu = _menuManager.GetMenu("Suit");
+
+            var suitsButtonActions = new List<Action<CardSuitsEnum>>
+            {
+                (CardSuitsEnum suit) => player.bid.Suit = suit,
+                (CardSuitsEnum _) => _menuManager.OpenMenu(tricksMenu)
+            };
             var suitsButtons = new List<Button>();
-            var valuesButtons = new List<Button>();
+            suitsButtons = _menuManager.GetButtons(FiveHundredGameRules.FiveHundredSuits, suitsButtonActions);
+            suitsButtons.Add(_menuManager.GetButton("No Ace/No Face", (string _) => _menuManager.CloseAllMenus()));
+            suitsMenu.Buttons = suitsButtons;
 
-            suitsButtons = _menuManager.GetButtons(FiveHundredGameRules.FiveHundredSuits, (CardSuitsEnum suit) => player.bid.Suit = suit);
-            suitsButtons.Add(_menuManager.GetButton("Ace No Face"));
-            valuesButtons = _menuManager.GetButtons(FiveHundredGameRules.FiveHundredTricks, (BidsEnum value) => player.bid.Value = value);
-            valuesButtons.Add(_menuManager.GetButton("Back"));
+            return suitsMenu;
+        }
 
-            bidsMenus.Add(_menuManager.GetMenu("Suit", suitsButtons));
-            bidsMenus.Add(_menuManager.GetMenu("Tricks", valuesButtons));
-
-            return bidsMenus;
+        public Menu CreateMenu(Player player)
+        {
+            var tricksMenu = CreateTricksMenu(player);
+            var suitsMenu = CreateSuitsMenu(player, tricksMenu);
+            return suitsMenu;
         }
     }
 }

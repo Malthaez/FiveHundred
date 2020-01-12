@@ -2,9 +2,7 @@
 using Assets.Scripts.Game.Behaviors.Layout;
 using Assets.Scripts.Game.Behaviors.Mappers;
 using Assets.Scripts.Game.DataSource;
-using Assets.Scripts.Game.Mediators;
 using Assets.Scripts.UI.Managers;
-using Assets.Scripts.UI.Mediators;
 using Assets.Scripts.UI.Repositories;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,24 +19,23 @@ namespace Assets.Scripts.Game.Managers
         private ScoreManager _scoreManager;
         private CardManager _cardManager;
         private LayoutManager _layoutManager;
+        private MenuManager _menuManager;
         private FiveHundredGameManager _fiveHundredGameManager;
         private GameDataSource _gameDataSource;
 
         public void Initialize()
         {
-            var menuMediator = new MenuMediator();
-            var bidsMediator = new BidsMediator(new BidsManager(new MenuManager(GetComponent<MenuRepository>())), menuMediator);
-
             _scoreManager = GetComponent<ScoreManager>();
             _cardManager = GetComponent<CardManager>();
             _layoutManager = GetComponent<LayoutManager>();
+            _menuManager = new MenuManager(GetComponent<MenuRepository>());
             _fiveHundredGameManager = GetComponent<FiveHundredGameManager>();
             _gameDataSource = GetComponent<GameDataSource>();
 
             _scoreManager.Initialize(_gameDataSource.CardPairsCount);
             _cardManager.Initialize(_scoreManager);
             _layoutManager.Initialize();
-            _fiveHundredGameManager.Initialize(menuMediator, bidsMediator);
+            _fiveHundredGameManager.Initialize(_menuManager);
 
             // StartMemoryGame(_gameDataSource.CardPairsCount);
             StartFiveHundredGame(_gameDataSource.Players, _gameDataSource.Kitty);

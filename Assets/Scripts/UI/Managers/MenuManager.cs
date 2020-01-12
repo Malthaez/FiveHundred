@@ -1,20 +1,32 @@
 ﻿using Assets.Scripts.UI.Behaviors;
+using Assets.Scripts.UI.Mediators;
 using Assets.Scripts.UI.Repositories;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Managers
 {
     public class MenuManager
     {
+        private readonly MenuMediator _menuMediator;
         private readonly MenuRepository _menuRepository;
 
         public MenuManager(MenuRepository menuRepository)
         {
+            _menuMediator = new MenuMediator();
             _menuRepository = menuRepository;
             _menuRepository.Initialize();
         }
+
+        public void OpenMenu(Menu menu) => _menuMediator.OpenMenu(menu);
+
+        public void CloseMenu() => _menuMediator.CloseMenu();
+
+        public void CloseAllMenus() => _menuMediator.CloseAllMenus();
+
+        public Coroutine AwaitMenu(Menu menu) => _menuRepository.GetMenuCoroutine(_menuMediator.AwaitMenu(menu));
 
         public Button GetButton(string label, IEnumerable<Action<string>> actions)
         {
@@ -52,6 +64,6 @@ namespace Assets.Scripts.UI.Managers
 
         public List<Button> GetButtons<T>(IEnumerable<T> values, Action<T> action) where T : Enum => GetButtons(values, new[] { action });
 
-        public Menu GetMenu(string title, IEnumerable<Button> buttons) => _menuRepository.CreateMenu(title, buttons);
+        public Menu GetMenu(string title) => _menuRepository.CreateMenu(title);
     }
 }

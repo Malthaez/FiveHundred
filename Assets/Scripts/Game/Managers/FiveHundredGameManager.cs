@@ -1,8 +1,7 @@
 ﻿using Assets.Scripts.Game.Behaviors;
 using Assets.Scripts.Game.Enums;
 using Assets.Scripts.Game.Interfaces;
-using Assets.Scripts.Game.Mediators;
-using Assets.Scripts.UI.Mediators;
+using Assets.Scripts.UI.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,14 +12,13 @@ namespace Assets.Scripts.Game.Managers
 {
     public class FiveHundredGameManager : MonoBehaviour
     {
-        [SerializeField] private GameObject _canvas;
-        private MenuMediator _menuMediator;
-        private BidsMediator _bidsMediator;
+        private MenuManager _menuManager;
+        private BidsManager _bidsManager;
 
-        public void Initialize(MenuMediator menuMediator, BidsMediator bidsMediator)
+        public void Initialize(MenuManager menuManager)
         {
-            _menuMediator = menuMediator;
-            _bidsMediator = bidsMediator;
+            _menuManager = menuManager;
+            _bidsManager = new BidsManager(menuManager);
         }
 
         public IEnumerator ReturnCardsToDeck(IEnumerable<Dealable> dealable, Deck deck)
@@ -74,8 +72,6 @@ namespace Assets.Scripts.Game.Managers
                 StartCoroutine(dealable.ArrangeCards());
             };
 
-            _bidsMediator.Test(players[0], _canvas);
-
             yield return deck.Shuffle();
             yield return players[0].Deal(dealables, deck, 1, dealCallback, () => dealer == null, (Dealable dealable) => dealable.name == "Kitty");
             Debug.Log(dealer);
@@ -90,6 +86,10 @@ namespace Assets.Scripts.Game.Managers
             };
 
             yield return dealer.Deal(GetDealables(dealables, dealer), deck, new[] { 3, 2 }, dealCallback, null, (Dealable dealable) => dealable.name == "Kitty" && dealable.Cards.Count >= 5);
+
+            var bidMenu = _bidsManager.CreateMenu(players[0]);
+            yield return _menuManager.AwaitMenu(bidMenu);
+
             Debug.Log("Done!");
         }
     }
